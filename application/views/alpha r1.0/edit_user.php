@@ -87,7 +87,8 @@
                                             </div>
                                            
                                         </div>
-
+                                        <?php $us_lvl = $this->my_func->scpro_decrypt($this->session->userdata('role'));?>
+                                        <?php if ($us_lvl == 1) { ?>
                                           <div class="row">
                                              <div class="form-group"> 
                                              <div class="form-group">
@@ -111,6 +112,7 @@
 
                                            
                                         </div>
+                                        <?php }?>
 
                                 <div class="clearfix" style="height: 20px"></div>
 

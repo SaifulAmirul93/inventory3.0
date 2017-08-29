@@ -111,7 +111,7 @@ $(document).ready(function() {
                                                                 <select class="form-control" id="subcategory" name="subcategory" required>
                                                                      <option value="-1" >Select Sub-category</option>
                                                             <?php foreach ($lvl2 as $key) {
-                                                                if($key->su_id == $arr->su_category){
+                                                                if($key->cat_id == $arr->ct_category){
                                                                 ?>
                                                                 <option value="<?= $key->su_id; ?>" <?php if($key->su_id == $arr->su_category){echo " selected ";} ?>> <?= $key->su_name; ?></option>
                                                                 <?php

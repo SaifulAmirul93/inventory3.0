@@ -111,10 +111,10 @@
                                             <td><?= $user->email; ?></td>
                                             <td><?= $user->ul_desc; ?></td>
                                             <td>
-                                            <a href="<?= site_url('purchase_v1/dashboard/page/c25?view=') ?>" name="c5" title="View User">
+                                            <a href="<?= site_url('Inventory/page/s2.3?view=').$this->my_func->scpro_encrypt($user->id); ?>" name="c5" title="View User">
                                             <button type="button" class="btn btn-info btn-xs" title="View"><i class="fa fa-eye"></i></button></a>
                                             &nbsp;&nbsp;&nbsp;
-                                            <a href="<?= site_url('purchase_v1/dashboard/page/c24?edit=') ?>" name="c5" title="Edit User">
+                                            <a href="<?= site_url('Inventory/page/s2.2?edit=').$this->my_func->scpro_encrypt($user->id); ?> ?>" name="c5" title="Edit User">
                                             <button type="button" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i></button></a>
                                              &nbsp;&nbsp;&nbsp;
                                              

@@ -414,8 +414,8 @@ class Inventory extends CI_Controller {
                         
                   break; 
 
-                   case "s2.1" :// user profile
-                        //start added
+                   case "s2.1" :// edit profile
+                        
                         $this->load->database();
                         $this->load->model('m_user');
                         $this->load->library('my_func');
@@ -431,6 +431,38 @@ class Inventory extends CI_Controller {
                         
                   break; 
 
+                  case "s2.2" :// edit profile
+                       ;
+                        $this->load->database();
+                        $this->load->model('m_user');
+                        $this->load->library('my_func');
+
+                        $id = $this->my_func->scpro_decrypt($this->input->get('edit'));
+                        $arr['lvl'] = $this->m_user->getLvl(); 
+                        $arr['arr'] = $this->m_user->getAll2($id);
+
+                        
+                        
+                        $data['display']=$this->load->view($this->parent_page.'/edit_user',$arr,true);
+                        $this->_show('display', $data, 's1');
+                        
+                  break; 
+
+                  case "s2.3" :// user profile
+                        //start added
+                        $this->load->database();
+                        $this->load->model('m_user');
+                        $this->load->library('my_func');
+
+                        $id = $this->my_func->scpro_decrypt($this->input->get('view'));
+                        $arr['arr'] = $this->m_user->getAll2($id);
+
+                        
+                        
+                        $data['display']=$this->load->view($this->parent_page.'/user_view',$arr,true);
+                        $this->_show('display', $data, 's1');
+                        
+                  break; 
 
                   default:
                         $this->_show();

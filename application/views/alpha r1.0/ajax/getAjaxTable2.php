@@ -29,8 +29,9 @@
                                             <td><?= $item->it_qty; ?></td>
                                             <td><?= $item->it_price; ?></td>
                                             <td>
+                                            <?php $us_lvl = $this->my_func->scpro_decrypt($this->session->userdata('role'));?>
                                             <center>
-                                            
+                                            <?php if ($us_lvl != 5) { ?>
                                             &nbsp;&nbsp;&nbsp;
                                            
                                             <button type="button" class="Lorder btn btn-success btn-circle btn-xs" title="Check-In" id="L<?= $n; ?>" ><i class="fa fa-arrow-down"></i></button>
@@ -40,15 +41,21 @@
                                             <button type="button" class="Morder btn btn-primary btn-circle btn-xs" title="Check-Out" id="M<?= $n; ?>" ><i class="fa fa-arrow-up"></i></button>
                                             &nbsp;&nbsp;&nbsp;
                                             <br><br>
+                                            <?php } ?>
                                             <a href="<?= site_url('Inventory/page/i1.2?view=').$this->my_func->scpro_encrypt($item->it_id); ?>">
                                             <button type="button" class="btn btn-info btn-circle btn-xs" title="View"><i class="fa fa-eye"></i></button></a>
+                                            <?php if ($us_lvl != 5) { ?>
                                             &nbsp;&nbsp;&nbsp;
                                             <a href="<?= site_url('Inventory/page/i1.1?edit=').$this->my_func->scpro_encrypt($item->it_id); ?>">
                                             <button type="button" class="btn btn-warning btn-circle btn-xs" title="View"><i class="fa fa-pencil"></i></button></a>
+                                            <?php } ?>
+
+                                            <?php if (($us_lvl != 4) && ($us_lvl != 5)) { ?>
                                              &nbsp;&nbsp;&nbsp;
                                        
                                              <button type="button" class="delBtn btn btn-danger btn-circle btn-xs" title="Delete"  id="<?= $n.'del' ?>" name="<?= $n.'del' ?>"><i class="fa fa-close"></i></button>
                                              <input type="hidden" class="form-control <?= $n.'del' ?>" name="item_id" id="item_id" value="<?= $this->my_func->scpro_encrypt($item->it_id); ?>">
+                                             <?php } ?>
                                              </center>
                                             </td>
                                         </tr>

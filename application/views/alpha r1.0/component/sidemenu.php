@@ -16,12 +16,7 @@
                     <li <?php if ($link == 'i2') { echo "class='active'";}?>>
                         <a href="<?= site_url('Inventory/page/i2'); ?>"><i class="fa fa-fw fa-archive"></i> Item List</a>
                     </li>
-                   <!--  <li <?php if ($link == 'c1') { echo "class='active'";}?>>
-                        <a href="<?= site_url('Inventory/page/c1'); ?>"><i class="fa fa-fw fa-sign-in"></i> Check-In</a>
-                    </li>
-                     <li <?php if ($link == 'c2') { echo "class='active'";}?>>
-                        <a href="<?= site_url('Inventory/page/c2'); ?>"><i class="fa fa-fw fa-sign-out"></i> Check-Out</a>
-                    </li> -->
+                 
                     <?php $us_lvl = $this->my_func->scpro_decrypt($this->session->userdata('role'));?>
                     <li <?php if ($link == 'l1') { echo "class='active'";}?>>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-list"></i> Logs</a>
@@ -46,17 +41,7 @@
                     <li <?php if ($link == 'r1' ) { echo "class='active'";}?>>
                         <a href="<?= site_url('Inventory/page/r1'); ?>"><i class="fa fa-fw fa-tags"></i> Sub-categories</a>
                     </li>
-                   <!--  <li <?php if ($link == 's1') { echo "class='active'";}?>>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demot"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                        <ul id="demot" class="collapse">
-                            <li>
-                                <a href="<?= site_url('Inventory/page/s1'); ?>"><i class="fa fa-fw fa-users"></i> Users</a>
-                            </li>
-                            <li>
-                                <a href="<?= site_url('Inventory/page/s2'); ?>"><i class="fa fa-fw fa-user"></i> User Profile</a>
-                            </li>
-                        </ul>
-                    </li> -->
+                 
                   
                 </ul>
             </div>
