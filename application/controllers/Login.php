@@ -9,10 +9,21 @@
 	        $this->load->library('session' , 'my_func');
 	    }
 	
-	    function index() {
-	        $this->load->view("alpha r1.0/login");
-	    }
+	    // function index() {
+	    //     $this->load->view("alpha r1.0/login");
+	    // }
 
+	    function index() {
+	        $this->load->view("alpha r1.0/login_page");
+	    }
+	    public function raw()
+	    {
+	      $this->load->view("alpha r1.0/login");
+	    }
+	    public function finish()
+	    {
+	      redirect('http://localhost/inventoryR1.0_finish/login','refresh');
+	    }
 	    //sql injection alert ***
 	    function signin(){
 	    	//$this->load->library("encrypt");
@@ -33,7 +44,7 @@
 	    		redirect(site_url('Inventory'),'refresh');
 	    	}else{
 	    		$this->session->set_flashdata('error', 'Your username or password Is Wrong');
-	    		redirect(site_url('login'),'refresh');
+	    		redirect(site_url('login/raw'),'refresh');
 	    	}
 	    	
 	    }

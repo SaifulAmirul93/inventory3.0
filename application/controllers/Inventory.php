@@ -152,10 +152,14 @@ class Inventory extends CI_Controller {
                         $this->load->model('m_item');
                         $this->load->library('my_func');
                         $this->load->model('m_category');
+                        $this->load->model('m_status_item');
+                        $this->load->model('m_dept');
 
                         $ver = $this->m_item->orderCount();
                         $arr['arr'] = $this->m_item->getAll2(10 , $p);
                         $arr['lvl'] = $this->m_category->getLvl();
+                        $arr['arr2'] = $this->m_status_item->get();
+                        $arr['arr3'] = $this->m_dept->get();
                         $result1 = sizeof($arr['arr']);
 
 
@@ -525,7 +529,7 @@ class Inventory extends CI_Controller {
               }
 
 
-
+           
            
 
 
@@ -601,6 +605,7 @@ class Inventory extends CI_Controller {
                       $this->load->model('m_item');
                       $this->load->library('my_func');
                       $id=$this->my_func->scpro_decrypt($arr['id']);
+                      
                       $arr2 = array(
                             "it_sku" => $arr['sku'],
                             "it_name" => $arr['name'],                            
@@ -713,12 +718,15 @@ class Inventory extends CI_Controller {
 
             public function updateQty()
             {
-                //redirect(site_url('nasty_v2/dashboard/page/i2'),'refresh');
+                
                 if ($this->input->post()) {
                     
                     $item_id = $this->input->post('item_id'); 
+                    $status = $this->input->post('status'); 
+                    $dept = $this->input->post('department'); 
                     $qty = $this->input->post('qty'); 
-                    $st = $this->input->post('st');                   
+                    $st = $this->input->post('st');
+
                     $this->load->database();
                     
                     $this->load->library('my_func');
@@ -730,7 +738,7 @@ class Inventory extends CI_Controller {
 
 
 
-                    $result=$this->m_item->updateQty1($qty , $item_id, $id, $st);
+                    $result=$this->m_item->updateQty1($qty , $item_id, $id, $st , $status , $dept);
                     if($result)
                     {
                       $this->session->set_flashdata('success', 'The item quantity are Updated!!');
@@ -914,12 +922,15 @@ class Inventory extends CI_Controller {
                    $this->load->database();
 
                   $this->load->model('m_item');
+                  $this->load->model('m_status_item');
+                  $this->load->model('m_dept');
                   $this->load->library('my_func');
                
                       
                       $ver = $this->m_item->orderCount2(0,$cat_id,$sub_id);
                       $arr['arr'] = $this->m_item->getAll4($ver, $p,0, $cat_id , $sub_id);
-
+                      $arr['arr2'] = $this->m_status_item->get();
+                      $arr['arr3'] = $this->m_dept->get();
                       $result1 = sizeof($arr['arr']);
                         $arr['page'] = $p;
                         $arr['total'] = $ver;

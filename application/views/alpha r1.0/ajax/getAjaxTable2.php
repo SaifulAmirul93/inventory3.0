@@ -61,56 +61,158 @@
                                         </tr>
                                         <tr class="L<?= $n; ?>" style="display : none;">
                                             <td colspan="8" >
+                                                <form action="<?= site_url('inventory/updateQty'); ?>" method="POST">
                                                 <div class="row">
                                                     <div class="col-md-10 col-md-offset-1">
-                                                    <div class="col-md-6">
-                                                    <label class="control-label pull-right">Check-In :</label>
-                                                    </div>
-                                                         <div class="col-md-5">
+                                                        <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <h3>Check-In</h3>
+                                                                    </div>
+                                                            </div>
+                                                            <br>
 
-                                                                <div class="form-group">
-                                                                    <form action="<?= site_url('inventory/updateQty'); ?>" method="POST">
-                                                                    <input type="number" id="qty" name="qty" class="form-control input-circle" step="0.0001" >
-                                                                    <div class="clearfix" style="height: 10px"></div>
-                                                                    <input type="hidden" class="form-control" value ="<?= $this->my_func->scpro_encrypt($item->it_id); ?>" name="item_id">
-                                                                    <input type="hidden" class="form-control" value ="1" name="st">
-                                                                     <button type="submit" class="btn blue pull-right">
+                                                    <div class="row">
+                                                            <div class="col-md-1">
+                                                                <label class="control-label pull-right">Status </label>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                        <div class="form-group">
+                                                                           
+                                                                            <select class="form-control" name="status" id="status" required="">
+                                                                                    <option value="-1" >Select</option>
+                                                                                <?php foreach ($arr2 as $key) {
+                                                                                    ?>
+                                                                                    <option value="<?= $key->is_id; ?>" > <?= $key->is_desc; ?></option>
+                                                                                    <?php
+                                                                                } ?>
+                                                                                
+                                                                            </select>
+                                                                             
+                                                                        </div>
+                                                            </div>
 
-                                                                        <i class="fa fa-save"></i> Save
-                                                                    </button>
-                                                                    </form>
-                                                                </div>
-                                                            </div>                                          
+                                                            <div class="col-md-2">
+                                                                <label class="control-label pull-right">Department </label>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                        <div class="form-group">
+                                                                           
+                                                                             <select class="form-control" name="department" id="department" required="">
+                                                                             <option value="" >Select Department</option>
+                                                                                    <?php foreach ($arr3 as $key) {
+                                                                                    ?>
+                                                                                    <option value="<?= $key->dp_id; ?>" > <?= $key->dp_dept; ?></option>
+                                                                                    <?php
+                                                                                } ?>
+                                                                            </select>
+                                                                             
+                                                                        </div>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <label class="control-label pull-right">Quantity </label>
+                                                            </div>
+                                                                 <div class="col-md-2">
+
+                                                                        <div class="form-group">
+                                                                            
+                                                                            <input type="number" id="qty" name="qty" class="form-control input-circle" step="0.0001"  required="">
+                                                                            <div class="clearfix" style="height: 10px"></div>
+                                                                            <input type="hidden" class="form-control" value ="<?= $this->my_func->scpro_encrypt($item->it_id); ?>" name="item_id">
+                                                                            <input type="hidden" class="form-control" value ="1" name="st">
+                                                                             <button type="submit" class="btn blue pull-right">
+
+                                                                                <i class="fa fa-save"></i> Save
+                                                                            </button>
+                                                                            
+                                                                        </div>
+                                                                    </div>  
+
+
+                                                        </div>
+
                                                     </div>                                      
                                                 </div>
+                                                </form>
                                                 
                                             </td>
                                         </tr>
 
                                          <tr class="M<?= $n; ?>" style="display : none;">
                                             <td colspan="8" >
-                                                <div class="row">
-                                                    <div class="col-md-10 col-md-offset-1">
-                                                    <div class="col-md-6">
-                                                    <label class="control-label pull-right">Check-Out :</label>
-                                                    </div>
-                                                         <div class="col-md-5">
+                                                <form action="<?= site_url('inventory/updateQty'); ?>" method="POST">
+                                                        <div class="row">
+                                                            <div class="col-md-10 col-md-offset-1">
 
-                                                                <div class="form-group">
-                                                                    <form action="<?= site_url('inventory/updateQty'); ?>" method="POST">
-                                                                    <input type="number" id="qty" name="qty" class="form-control input-circle" step="0.0001" >
-                                                                    <div class="clearfix" style="height: 10px"></div>
-                                                                    <input type="hidden" class="form-control" value ="<?= $this->my_func->scpro_encrypt($item->it_id); ?>" name="item_id">
-                                                                    <input type="hidden" class="form-control" value ="2" name="st">
-                                                                     <button type="submit" class="btn blue pull-right">
+                                                            <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <h3>Check-Out</h3>
+                                                                    </div>
+                                                            </div>
+                                                            <br>
+                                                            <div class="row">
+                                                                    <div class="col-md-1">
+                                                                        <label class="control-label pull-right">Status </label>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                                <div class="form-group">
+                                                                                   
+                                                                                     <select class="form-control" name="status" id="status"  required="">
+                                                                                    <option value="-1" >Select</option>
+                                                                                <?php foreach ($arr2 as $key) {
+                                                                                    ?>
+                                                                                    <option value="<?= $key->is_id; ?>" > <?= $key->is_desc; ?></option>
+                                                                                    <?php
+                                                                                } ?>
+                                                                                
+                                                                            </select>
+                                                                                     
+                                                                                </div>
+                                                                    </div>
 
-                                                                        <i class="fa fa-save"></i> Save
-                                                                    </button>
-                                                                    </form>
+                                                                    <div class="col-md-2">
+                                                                        <label class="control-label pull-right">Department </label>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                                <div class="form-group">
+                                                                                   
+                                                                                     <select class="form-control" name="department" id="department" required="">
+                                                                                            <option value="" >Select Department</option>
+                                                                                             <?php foreach ($arr3 as $key) {
+                                                                                    ?>
+                                                                                    <option value="<?= $key->dp_id; ?>" > <?= $key->dp_dept; ?></option>
+                                                                                    <?php
+                                                                                } ?>
+                                                                            </select>
+                                                                                  
+                                                                                     
+                                                                                </div>
+                                                                    </div>
+
+
+                                                                    <div class="col-md-2">
+                                                                        <label class="control-label pull-right">Quantity </label>
+                                                                    </div>
+                                                                         <div class="col-md-2">
+
+                                                                                <div class="form-group">
+                                                                                    
+                                                                                    <input type="number" id="qty" name="qty" class="form-control input-circle" step="0.0001"  required="">
+                                                                                    <div class="clearfix" style="height: 10px"></div>
+                                                                                    <input type="hidden" class="form-control" value ="<?= $this->my_func->scpro_encrypt($item->it_id); ?>" name="item_id">
+                                                                                    <input type="hidden" class="form-control" value ="2" name="st">
+                                                                                     <button type="submit" class="btn blue pull-right">
+
+                                                                                        <i class="fa fa-save"></i> Save
+                                                                                    </button>
+                                                                                    
+                                                                                </div>
+                                                                        </div>
                                                                 </div>
-                                                            </div>                                          
-                                                    </div>                                      
-                                                </div>
+
+
+                                                            </div>                                      
+                                                        </div>
+                                                </form>
                                                 
                                             </td>
                                         </tr>

@@ -40,7 +40,10 @@
                                             <th>#</th>
                                             <th>Log status</th>
                                             <th>Item Name</th>
+
                                             <th>Category</th>
+                                            <th>Item Status</th>
+                                            <th>Department</th>
                                             <th>From Qty</th>
                                             <th>To Qty</th>
                                             <th>Difference (Qty)</th>
@@ -67,6 +70,8 @@
                                             </td>
                                             <td><?= $log->it_name; ?></td>
                                             <td><?= $log->ct_name; ?></td>
+                                            <td><?= $log->is_desc; ?></td>
+                                            <td><?= $log->dp_dept; ?></td>
                                             <td><?= $log->lg_fromqty; ?></td>
                                             <td><?= $log->lg_toqty; ?></td>
                                             <td>

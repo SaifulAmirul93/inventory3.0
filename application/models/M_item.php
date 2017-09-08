@@ -117,7 +117,7 @@ class M_item extends CI_Model {
         }
     }
 
-      public function updateQty1($qty , $wh , $id , $st=null)
+      public function updateQty1($qty , $wh , $id , $st=null , $status , $dept)
       {
       
         $this->db->select('*');
@@ -146,6 +146,8 @@ class M_item extends CI_Model {
 
          $arr1 = array(
           'cat_id' => $arr->ct_category,
+          'is_id' => $status,
+          'dp_id' => $dept,
           'lg_type' => $st,
           'lg_item' => $arr->it_id,
           'lg_fromqty' =>$arr->it_qty,
@@ -315,6 +317,8 @@ class M_item extends CI_Model {
 
             $this->db->join('invento_subcategories sub', 'it.su_category = sub.su_id', 'left');
 
+            $this->db->order_by('it.it_name', 'desc');
+
             if ($limit !== null && $start !== null) {
                 $this->db->limit($limit, $start);
             }   
@@ -336,7 +340,7 @@ class M_item extends CI_Model {
         public function totalByItem($year = null , $month = -1 , $cat = -1 , $sub = -1)
     {
         $this->db->select('*');
-        $this->db->from('invento_items');
+        $this->db->from('invento_logs');
         // $this->db->join('order_ext ox', 'ox.orex_id = ori.orex_id', 'left');
         // $this->db->join('order ord', 'ox.or_id = ord.or_id', 'left');
         // $this->db->join('type2 ty2' , 'ty2.ty2_id = ori.ty2_id' , 'left');

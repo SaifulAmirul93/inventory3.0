@@ -229,8 +229,11 @@ class M_log extends CI_Model {
                 $this->db->where('lg.lg_id >', 0);
             }
 
-            $this->db->join('status st', 'lg.lg_type = st.sta_id', 'left');  
+            $this->db->join('status st', 'lg.lg_type = st.sta_id', 'left');
 
+            $this->db->join('department dp', 'lg.dp_id = dp.dp_id', 'left');   
+
+            $this->db->join('item_status is', 'lg.is_id = is.is_id', 'left');  
 
             $this->db->join('invento_items it', 'lg.lg_item = it.it_id', 'left');
 

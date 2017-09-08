@@ -31,11 +31,12 @@
                                             
                                             <td>
                                             <center>
-                                            
+                                            <?php $us_lvl = $this->my_func->scpro_decrypt($this->session->userdata('role'));?>
+                                           <?php if ($us_lvl != 5) { ?>
                                            
                                            
                                             <button type="button" class="Lorder btn btn-danger btn-circle btn-xs" title="Check-In" id="L<?= $n; ?>" >Update NOW!</button>
-
+                                            <?php } ?>
                                            
                                              </center>
                                             </td>
@@ -46,7 +47,7 @@
                                                 <div class="row">
                                                     <div class="col-md-10 col-md-offset-1">
                                                     <div class="col-md-6">
-                                                    <label class="control-label pull-right">Check-In :</label>
+                                                        <label class="control-label pull-right">Check-In :</label>
                                                     </div>
                                                          <div class="col-md-5">
 
@@ -62,7 +63,7 @@
                                                                     </button>
                                                                     </form>
                                                                 </div>
-                                                            </div>                                          
+                                                        </div>                                          
                                                     </div>                                      
                                                 </div>
                                                 

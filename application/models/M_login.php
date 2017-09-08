@@ -60,6 +60,7 @@
 	    	$this->db->from(self::TABLE_NAME);
 	    	$this->db->where($data);
 	    	$result = $this->db->get()->result();
+	    	
 	    	if ($result) {
 	    		if ($this->my_func->scpro_decrypt($result[0]->password) == $pass) {
 	    			return array_shift($result);
