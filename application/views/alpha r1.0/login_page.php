@@ -78,8 +78,9 @@
                   </div>
                   <div class="clearfix" style="height: 20px"></div>
                   <div class="row">
+                  <a href="<?= site_url('login/lab'); ?>">
                       <button type="button" class="form-button">Lab</button>
-                    
+                  </a>   
                   </div>
                   </div>
                   <div class="col-md-3">
@@ -88,9 +89,9 @@
                     </div>
                   <div class="clearfix" style="height: 20px"></div>
                   <div class="row">
-                    
+                  <a href="<?= site_url('login/apparel'); ?>">  
                   <button type="button" class="form-button">Apparel</button>
-                  
+                  </a>
                   </div>
                   </div>
       </div>

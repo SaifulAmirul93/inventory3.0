@@ -24,6 +24,14 @@
 	    {
 	      redirect('http://localhost/inventoryR1.0_finish/login','refresh');
 	    }
+	    public function apparel()
+	    {
+	      redirect('http://localhost/inventoryR1.0_apparel/login','refresh');
+	    }
+	     public function lab()
+	    {
+	      redirect('http://localhost/inventoryR1.0_lab/login','refresh');
+	    }
 	    //sql injection alert ***
 	    function signin(){
 	    	//$this->load->library("encrypt");
