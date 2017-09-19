@@ -109,7 +109,7 @@
                                             <td><?= $cat->ct_name; ?></td>
                                             <td><?= $cat->ct_place; ?></td>
                                             <td><?= $cat->ct_descrp; ?></td>
-                                           <!--  <td><?= $cat->date_added; ?></td> -->
+                                          
                                             <td>
                                             <center>
                                             

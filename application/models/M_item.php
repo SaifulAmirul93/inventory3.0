@@ -63,8 +63,7 @@ class M_item extends CI_Model {
       
      
             $this->db->from(self::TABLE_NAME);
-          
-      
+            $this->db->where('del_id', 0);
             $result = $this->db->count_all_results();
             
             return $result;
@@ -86,6 +85,7 @@ class M_item extends CI_Model {
                     
                   $this->db->select('sum(it_price *it_qty) as price');
                   $this->db->from('invento_items');
+                  $this->db->where('del_id', 0);
                   $result=$this->db->get()->result();
 
                   return $result;
@@ -97,6 +97,7 @@ class M_item extends CI_Model {
       
             $this->db->select_sum('it_qty');
             $this->db->from('invento_items');
+            $this->db->where('del_id', 0);
             $result=$this->db->get()->result();
 
             return $result;
@@ -146,6 +147,7 @@ class M_item extends CI_Model {
 
          $arr1 = array(
           'cat_id' => $arr->ct_category,
+          'sub_id' => $arr->su_category,
           'is_id' => $status,
           'dp_id' => $dept,
           'lg_type' => $st,
@@ -337,31 +339,35 @@ class M_item extends CI_Model {
         }
 
 
-        public function totalByItem($year = null , $month = -1 , $cat = -1 , $sub = -1)
+        public function totalByItem($year = null , $month = -1 , $cat = -1 , $sub = -1, $status = -1)
     {
-        $this->db->select('*');
-        $this->db->from('invento_logs');
-        // $this->db->join('order_ext ox', 'ox.orex_id = ori.orex_id', 'left');
-        // $this->db->join('order ord', 'ox.or_id = ord.or_id', 'left');
-        // $this->db->join('type2 ty2' , 'ty2.ty2_id = ori.ty2_id' , 'left');
-        // $this->db->join('category ca' , 'ty2.ca_id = ca.ca_id' , 'left');
-        // $this->db->join('nicotine ni', 'ori.ni_id = ni.ni_id' , 'left');
-        //$this->db->group_by('ori.orex_id');
-        // if ($year != null) {
-        //     $this->db->where('YEAR(ord.or_date)', $year);
-        //     if ($month != -1) {
-        //         $this->db->where('MONTH(ord.or_date)', $month);
-        //     }
-        // }
+        
+        $this->db->select('lg.lg_id , it.it_id as it_id, it.it_name as it_name, it.it_color  as it_color, MONTH(lg.lg_date) as month, YEAR(lg.lg_date) as year , sum(lg.lg_qtyDiff) as total');
+        $this->db->from('invento_logs lg');
+        $this->db->join('invento_items it', 'lg.lg_item = it.it_id', 'left');
+        
+        
+         if ($year != null) {
+            $this->db->where('YEAR(lg.lg_date)', $year);
+            if ($month != -1) {
+                $this->db->where('MONTH(lg.lg_date)', $month);
+            }
+        }
+
         if ($cat != -1) {
-            $this->db->where('ct_category', $cat);
+            $this->db->where('lg.cat_id', $cat);
         }
         if ($sub != -1) {
-            $this->db->where('su_category', $sub);
+            $this->db->where('lg.sub_id', $sub);
         }
-        // $this->db->group_by('it_id');  
+        if($status != -1)
+        {
+            $this->db->where('lg.lg_type', $status);
+        }
+
+        $this->db->group_by('it.it_id');  
         // $this->db->where('ord.or_del', 0);
-        // $this->db->order_by('it_date', 'asc'); 
+        $this->db->order_by('lg.lg_date', 'asc'); 
         $result = $this->db->get()->result();
         return $result;
     }

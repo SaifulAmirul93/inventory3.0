@@ -60,6 +60,8 @@ class Inventory extends CI_Controller {
                         $this->load->model('m_item');
                         $this->load->model('m_log');
                         $this->load->model('m_category');
+                        $this->load->model('m_status_item');
+                        $this->load->model('m_dept');
 
                         $arr['countItem'] = $this->m_item->countItem();
                         $arr['countDgr'] = $this->m_item->countDgr();
@@ -71,6 +73,8 @@ class Inventory extends CI_Controller {
                         $arr['totalDel'] = $this->m_log->total_stat(3);
 
                         $arr['lvl'] = $this->m_category->getLvl();
+                        $arr['arr2'] = $this->m_status_item->get();
+                        $arr['arr3'] = $this->m_dept->get();
 
                         $ver = $this->m_item->orderCount2(1);
 
@@ -789,11 +793,14 @@ class Inventory extends CI_Controller {
                   $arr['cat'] = $this->m_category->getName($arr1['cat1']);
                   $arr['sub'] = $this->m_subcat->getName($arr1['sub1']);
 
-                
+                  $arr['status'] = $arr1['status'];
+
+                  $arr['year'] = $arr1['year1'];
+                  $arr['month'] = $arr1['month1'];
 
 
                 
-                  $arr['arr'] = $this->m_item->totalByItem($arr1['year1'] , $arr1['month1'] , $arr1['cat1'] , $arr1['sub1']);                      
+                  $arr['arr'] = $this->m_item->totalByItem($arr1['year1'] , $arr1['month1'] , $arr1['cat1'] , $arr1['sub1'] , $arr1['status']);                      
               
                  $this->load->view($this->parent_page.'/ajax/getAjaxGraph2', $arr);
               }

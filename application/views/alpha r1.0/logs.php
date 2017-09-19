@@ -42,6 +42,7 @@
                                             <th>Item Name</th>
 
                                             <th>Category</th>
+                                            <th>Sub-category</th>
                                             <th>Item Status</th>
                                             <th>Department</th>
                                             <th>From Qty</th>
@@ -70,6 +71,7 @@
                                             </td>
                                             <td><?= $log->it_name; ?></td>
                                             <td><?= $log->ct_name; ?></td>
+                                            <td><?= $log->su_name; ?></td>
                                             <td><?= $log->is_desc; ?></td>
                                             <td><?= $log->dp_dept; ?></td>
                                             <td><?= $log->lg_fromqty; ?></td>

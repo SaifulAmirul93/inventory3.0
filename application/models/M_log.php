@@ -239,6 +239,8 @@ class M_log extends CI_Model {
 
             $this->db->join('invento_categories cat', 'lg.cat_id = cat.ct_id', 'left');
 
+            $this->db->join('invento_subcategories sub', 'lg.sub_id = sub.su_id', 'left');
+
             $this->db->join('invento_users us', 'lg.us_user = us.id', 'left');
 
             $this->db->order_by('lg.lg_date', 'desc');

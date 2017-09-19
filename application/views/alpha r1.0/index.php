@@ -211,30 +211,79 @@
                                         </tr>
 
                                         <tr class="L<?= $n; ?>" style="display : none;">
-                                            <td colspan="7" >
+                                            <td colspan="8" >
+                                            <form action="<?= site_url('inventory/updateQty'); ?>" method="POST">
                                                 <div class="row">
                                                     <div class="col-md-10 col-md-offset-1">
-                                                    <div class="col-md-6">
-                                                    <label class="control-label pull-right">Check-In :</label>
-                                                    </div>
-                                                         <div class="col-md-5">
+                                                        <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <h3>Check-In</h3>
+                                                                    </div>
+                                                            </div>
+                                                            <br>
 
-                                                                <div class="form-group">
-                                                                    <form action="<?= site_url('inventory/updateQty'); ?>" method="POST">
-                                                                    <input type="number" id="qty" name="qty" class="form-control input-circle" step="0.0001" >
-                                                                    <div class="clearfix" style="height: 10px"></div>
-                                                                    <input type="hidden" class="form-control" value ="<?= $this->my_func->scpro_encrypt($item->it_id); ?>" name="item_id">
-                                                                    <input type="hidden" class="form-control" value ="1" name="st">
-                                                                     <button type="submit" class="btn blue pull-right">
+                                                    <div class="row">
+                                                            <div class="col-md-1">
+                                                                <label class="control-label pull-right">Status </label>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                        <div class="form-group">
+                                                                           
+                                                                            <select class="form-control" name="status" id="status" required="">
+                                                                                    <option value="-1" >Select</option>
+                                                                                <?php foreach ($arr2 as $key) {
+                                                                                    ?>
+                                                                                    <option value="<?= $key->is_id; ?>" > <?= $key->is_desc; ?></option>
+                                                                                    <?php
+                                                                                } ?>
+                                                                                
+                                                                            </select>
+                                                                             
+                                                                        </div>
+                                                            </div>
 
-                                                                        <i class="fa fa-save"></i> Save
-                                                                    </button>
-                                                                    </form>
-                                                                </div>
-                                                            </div>                                          
+                                                            <div class="col-md-2">
+                                                                <label class="control-label pull-right">Department </label>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                        <div class="form-group">
+                                                                           
+                                                                             <select class="form-control" name="department" id="department" required="">
+                                                                             <option value="" >Select Department</option>
+                                                                                    <?php foreach ($arr3 as $key) {
+                                                                                    ?>
+                                                                                    <option value="<?= $key->dp_id; ?>" > <?= $key->dp_dept; ?></option>
+                                                                                    <?php
+                                                                                } ?>
+                                                                            </select>
+                                                                             
+                                                                        </div>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <label class="control-label pull-right">Quantity </label>
+                                                            </div>
+                                                                 <div class="col-md-2">
+
+                                                                        <div class="form-group">
+                                                                            
+                                                                            <input type="number" id="qty" name="qty" class="form-control input-circle" step="0.0001"  required="">
+                                                                            <div class="clearfix" style="height: 10px"></div>
+                                                                            <input type="hidden" class="form-control" value ="<?= $this->my_func->scpro_encrypt($item->it_id); ?>" name="item_id">
+                                                                            <input type="hidden" class="form-control" value ="1" name="st">
+                                                                             <button type="submit" class="btn blue pull-right">
+
+                                                                                <i class="fa fa-save"></i> Save
+                                                                            </button>
+                                                                            
+                                                                        </div>
+                                                                    </div>  
+
+
+                                                        </div>
+
                                                     </div>                                      
                                                 </div>
-                                                
+                                                </form>
                                             </td>
                                         </tr>
                                        
@@ -379,57 +428,73 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                         <div class="col-lg-3">
-                                     <select name="category2" id="category2" class="form-control input-circle">
-                                        <option value="-1" >Select Category</option>
-                                                            <?php foreach ($lvl as $key) {
-                                                                ?>
-                                                                <option value="<?= $key->ct_id; ?>" > <?= $key->ct_name; ?></option>
-                                                                <?php
-                                                            } ?>
-                                                            
-                                    </select>
-                                        </div>
-                                        <div class="col-lg-3" id="divSub2">
-                                            <select class="form-control input-circle" id="subcategory2"  name="subcategory2" >
-                                        <option value=-1"">Select Sub-category</option>
-                                       
-                                    </select>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <input type="number" name="year" id="year" class="form-control" min="2017" placeholder="Year">
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <select id="month" name="year" class="form-control">
-                                                <option value="-1">-- All Month --</option>
-                                                <option value="1">January</option>
-                                                <option value="2">February</option>
-                                                <option value="3">March</option>
-                                                <option value="4">April</option>
-                                                <option value="5">May</option>
-                                                <option value="6">June</option>
-                                                <option value="7">July</option>
-                                                <option value="8">August</option>
-                                                <option value="9">September</option>
-                                                <option value="10">October</option>
-                                                <option value="11">November</option>
-                                                <option value="12">December</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <button type="button" id="itemBtn" name="itemBtn" class="btn btn-circle btn-success">Search</button>
-                                        </div>                                            
+                                                 <div class="col-lg-3">
+                                                     <select name="category2" id="category2" class="form-control input-circle">
+                                                        <option value="-1" >Select Category</option>
+                                                                            <?php foreach ($lvl as $key) {
+                                                                                ?>
+                                                                                <option value="<?= $key->ct_id; ?>" > <?= $key->ct_name; ?></option>
+                                                                                <?php
+                                                                            } ?>
+                                                                            
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-3" id="divSub2">
+                                                    <select class="form-control input-circle" id="subcategory2"  name="subcategory2" >
+                                                        <option value="-1">Select Sub-category</option>
+                                                   
+                                                    </select>
+                                                </div>
+                                                 <div class="col-lg-3">
+                                                    <select class="form-control input-circle" id="stat" name="stat">
+                                                        <option value="">Select Status</option>
+                                                        <option value="1">Check-In</option>
+                                                        <option value="2">Check-Out</option>
+                                                   
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <button type="button" id="itemBtn" name="itemBtn" class="btn btn-circle btn-success">Search</button>
+                                                </div>  
                                         </div>
                                     </div>
                                 </div>
+                                <div class="clearfix" style="height: 30px"></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                    <div class="col-lg-2">
+                                                        <input type="number" name="year" id="year" class="form-control" min="2017" placeholder="Year">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <select id="month" name="month" class="form-control">
+                                                            <option value="-1">-- All Month --</option>
+                                                            <option value="1">January</option>
+                                                            <option value="2">February</option>
+                                                            <option value="3">March</option>
+                                                            <option value="4">April</option>
+                                                            <option value="5">May</option>
+                                                            <option value="6">June</option>
+                                                            <option value="7">July</option>
+                                                            <option value="8">August</option>
+                                                            <option value="9">September</option>
+                                                            <option value="10">October</option>
+                                                            <option value="11">November</option>
+                                                            <option value="12">December</option>
+                                                        </select>
+                                                    </div>
+                                                                                  
+                                            </div>
+                                        </div>
+                                    </div>
                                 <div class="clearfix" style="height: 20px"></div>
                                 <div id="site_statistics_loading2" class="display-none">
                                         <center><img src="<?= base_url(); ?>/img/01-progress.gif" alt="loading" width="250" height="188"/> </center>
                                         
-                                        </div>
-                                    <div id="code">
+                                </div>
+                                <div id="code">
                                     <div class="clearfix" style="height: 100px"></div>
-                                        </div>
+                                </div>
                                         <div id="chartdiv" class="display-none"></div>
 
                             </div>
@@ -516,15 +581,14 @@ $("#itemBtn").click(function() {
       
         cat2 = $('#category2').val();
         sub2 = $('#subcategory2').val();
-
+        status2 = $('#stat').val();
         year = $('#year').val();
         month = $('#month').val();
        
-
-        alert(cat2);
-        alert(sub2);
-       $.when($("#site_statistics_loading2").removeClass('display-none')).then(function(){        
-        $.post('<?= site_url('Inventory/getAjaxGraph2') ?>', {year1 : year , month1 : month , cat1 : cat2 , sub1 : sub2}, function(data) 
+     
+      
+     $.when($("#site_statistics_loading2").removeClass('display-none')).then(function(){        
+        $.post('<?= site_url('Inventory/getAjaxGraph2') ?>', {year1 : year , month1 : month , cat1 : cat2 , sub1 : sub2 , status : status2}, function(data) 
         {
             $.when($('#code').html(data)).then(function(){
                 $("#site_statistics_loading2").addClass('display-none');
