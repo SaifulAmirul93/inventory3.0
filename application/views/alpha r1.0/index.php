@@ -337,7 +337,7 @@
                         
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="fa fa-line-chart"></i> Statistic for month of <?php echo date("F"); ?> <?php echo date("Y"); ?>
+                                <i class="fa fa-line-chart"></i> Statistic for month of <?php $date = date("Y-m-d", strtotime(" -2 months")); echo $date; ?> <?php echo date("Y"); ?>
                             </li>
                         </ol>
                     </div>
@@ -577,7 +577,7 @@ $(document).ready(function () {
             }           
     
         });
-$("#itemBtn").click(function() {
+    $("#itemBtn").click(function() {
       
         cat2 = $('#category2').val();
         sub2 = $('#subcategory2').val();

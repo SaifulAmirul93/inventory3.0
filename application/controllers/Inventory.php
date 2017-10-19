@@ -457,7 +457,7 @@ class Inventory extends CI_Controller {
                   break; 
 
                   case "s2.3" :// user profile
-                        //start added
+                        
                         $this->load->database();
                         $this->load->model('m_user');
                         $this->load->library('my_func');
@@ -1056,7 +1056,7 @@ class Inventory extends CI_Controller {
                       $result = $this->m_user->update($arr2 , $id);
                       
                       $this->session->set_flashdata('success', 'User are successfully updated');       
-                      redirect(site_url('Inventory/page/s2'),'refresh');
+                      redirect(site_url('Inventory/page/a1'),'refresh');
                     
                     }
             }

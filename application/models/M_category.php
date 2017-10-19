@@ -58,7 +58,6 @@ class M_category extends CI_Model {
 
     }
      public function getName($where = NULL) {
-        // echo "<script>alert($where);</script>";
 
         $this->db->select("ct_name");
         $this->db->from(self::TABLE_NAME);
