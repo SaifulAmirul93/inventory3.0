@@ -29,7 +29,7 @@
                     <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                        <h4><strong>Price Change Logs</strong></h4>
+                        <h4><strong>Price Change</strong></h4>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -38,12 +38,13 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Log status</th>
+                                            <th>status</th>
                                             <th>Item Name</th>
                                             <th>Category</th>
-                                            <th>From Qty</th>
-                                            <th>To Qty</th>
-                                            <th>Difference (Qty)</th>
+                                            <th>Sub-category</th>
+                                            <th>From Price (RM)</th>
+                                            <th>To Price (RM)</th>
+                                            <th>Difference (RM)</th>
                                             <th>Date Added</th>
                                             <th>Username</th>
                                         </tr>
@@ -52,7 +53,7 @@
                                         <?php
                                 $n = 0; 
                                     if($arr != null){
-                                    foreach ($arr as $log){
+                                    foreach ($arr as $pi){
                                         $n++;
                                         ?>
                                         <tr>
@@ -60,25 +61,26 @@
 
                                            
                                             <td>
-                                            <span class="label" style = "background-color : <?= $log->sta_color; ?>">
-                                            <?= $log->sta_desc; ?>
+                                            <span class="label" style = "background-color : <?= $pi->sta_color; ?>">
+                                            <?= $pi->sta_desc; ?>
                                             </span>
                                                 
                                             </td>
-                                            <td><?= $log->it_name; ?></td>
-                                            <td><?= $log->ct_name; ?></td>
-                                            <td><?= $log->lg_fromqty; ?></td>
-                                            <td><?= $log->lg_toqty; ?></td>
+                                            <td><?= $pi->it_name; ?></td>
+                                            <td><?= $pi->ct_name; ?></td>
+                                            <td><?= $pi->su_name; ?></td>
+                                            <td><?= number_format($pi->pi_frprice, 2); ?></td>
+                                            <td><?= number_format($pi->pi_toprice, 2); ?></td>
                                             <td>
 
                                             <?php 
-                                            if($log->lg_qtyDiff < 0)
+                                            if($pi->pi_prDiff < 0)
                                             {
-                                                echo $log->lg_qtyDiff;
+                                                echo number_format($pi->pi_prDiff, 2);
                                             }
                                             else
                                             {
-                                                echo "+".$log->lg_qtyDiff;
+                                                echo "+".number_format($pi->pi_prDiff, 2);
                                             }
                                             ?>
 
@@ -86,8 +88,8 @@
                                                 
                                             </td>
                                            
-                                            <td><?= $log->lg_date; ?></td>
-                                            <td><?= $log->username; ?></td>
+                                            <td><?= $pi->pi_date; ?></td>
+                                            <td><?= $pi->username; ?></td>
                                           
                                         </tr>
                                         

@@ -134,7 +134,7 @@ $(document).ready(function() {
                                     <thead class="flip-content">
                                         <tr>
                                             <th>#</th>
-                                            <th>Item Code</th>
+                                            <!-- <th>Item Code</th> -->
                                             <th>Item Name</th>
                                             <th>Category</th>
                                             <th>Sub-category</th>
@@ -153,13 +153,13 @@ $(document).ready(function() {
                                         <tr>
                                             <td><?= $n ?></td>
 
-                                            <td><?= $item->it_id ?>
-                                            </td>
+                                            <!-- <td><?= $item->it_id ?>
+                                            </td> -->
                                             <td><?= $item->it_name; ?></td>
                                             <td><?= $item->ct_name; ?></td>
                                             <td><?= $item->su_name; ?></td>
                                             <td><?= $item->it_qty; ?></td>
-                                            <td><?= $item->it_price; ?></td>
+                                            <td><?= number_format($item->it_price , 2); ?></td>
                                             <td>
                                             <?php $us_lvl = $this->my_func->scpro_decrypt($this->session->userdata('role'));?>
                                             <center>

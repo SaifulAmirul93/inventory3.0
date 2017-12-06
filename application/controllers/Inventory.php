@@ -232,10 +232,13 @@ class Inventory extends CI_Controller {
 
                   case "p1" :
                          $this->load->database();
-                        $this->load->model('m_log');
+                        $this->load->model('m_log_price');
                         $this->load->library('my_func');
 
-                        $arr['arr'] = $this->m_log->getAll();
+                        // $arr = array('' => , );
+
+
+                        $arr['arr'] = $this->m_log_price->getAll();
                         
                         $data['display']=$this->load->view($this->parent_page.'/price_log', $arr,true);
                         $this->_show('display', $data, 'l1');
@@ -382,6 +385,20 @@ class Inventory extends CI_Controller {
                         
                   break;   
 
+                  case "k1" :// dashboard
+                        //start added
+                        $this->load->database();
+                        $this->load->model('m_category');
+                        $this->load->library('my_func');
+
+                        $arr['arr'] = $this->m_category->getAll();
+
+                        
+                        
+                        $data['display']=$this->load->view($this->parent_page.'/type_list',$arr,true);
+                        $this->_show('display',$data,'t1');
+                        
+                  break;  
                    case "a24" :// adduser
                      
 
@@ -603,13 +620,17 @@ class Inventory extends CI_Controller {
 
               public function updateItem()
               {
-                      if ($this->input->post()) {
+                    if ($this->input->post()) {
                       $arr = $this->input->post();          
                       $this->load->database();
                       $this->load->model('m_item');
                       $this->load->library('my_func');
                       $id=$this->my_func->scpro_decrypt($arr['id']);
                       
+                      $usid = $this->my_func->scpro_decrypt($this->session->userdata('id'));
+
+                        
+
                       $arr2 = array(
                             "it_sku" => $arr['sku'],
                             "it_name" => $arr['name'],                            
@@ -621,15 +642,15 @@ class Inventory extends CI_Controller {
                             "it_price" => $arr['price'],
                             "it_descrp" => $arr['desc']
                         );
-                      
-                      
+                         
 
-                      
-                      $result = $this->m_item->update($arr2 , $id);
-                      
-                          
-                      
+                          if($this->_checkPriceChange($id,$arr2))
+                         {
+                              $this->m_item->updatePrice($arr2 , $usid , $id);
+                         }
 
+                         $result = $this->m_item->update($arr2 , $id);
+                      
                     if($result){
                     $this->session->set_flashdata('success', 'Item details are updated');
                     redirect(site_url('Inventory/page/i2'),'refresh');
@@ -1168,6 +1189,23 @@ class Inventory extends CI_Controller {
                           $this->session->set_flashdata('error', 'Item are not restored');
                           redirect(site_url('Inventory/page/i2'),'refresh');
                           }           
+                }
+
+                private function _checkPriceChange($id = null, $arr1 = null)
+                {
+                    $this->load->database();
+                    $this->load->model('m_item');
+
+                    $data=$this->m_item->get($id);
+
+                    if( $arr1['it_price'] != $data->it_price )
+                    {
+                         return true;
+                    }
+                    else
+                    {
+                         return false;
+                    }
                 }
 
 

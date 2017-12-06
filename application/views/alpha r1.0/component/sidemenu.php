@@ -29,18 +29,40 @@
                                 <a href="<?= site_url('Inventory/page/l1.2'); ?>"><i class="fa fa-fw fa-trash"></i> Deleted Item Logs</a>
                             </li>
                             <?php }?>
-                            <!-- <li>
+                            <li>
                                 <a href="<?= site_url('Inventory/page/p1'); ?>"><i class="fa fa-fw fa-dollar"></i> Price Change</a>
-                            </li> -->
+                            </li>
                         </ul>
                     </li>
-                       <li <?php if ($link == 't1') { echo "class='active'";}?>>
+                     <li <?php if ($link == 'l1') { echo "class='active'";}?>>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo1"><i class="fa fa-fw fa-gear"></i> Setting</a>
+                        <ul id="demo1" class="collapse">
+                            <li <?php if ($link == 'k1') { echo "class='active'";}?>>
+                                <a href="<?= site_url('Inventory/page/k1'); ?>"><i class="fa fa-fw fa-tasks"></i> Types</a>
+                            </li>
+                            <li <?php if ($link == 'h1') { echo "class='active'";}?>>
+                                <a href="<?= site_url('Inventory/page/h1'); ?>"><i class="fa fa-fw fa-cubes"></i> Products</a>
+                            </li>
+                            <li <?php if ($link == 't1') { echo "class='active'";}?>>
+                                <a href="<?= site_url('Inventory/page/t1'); ?>"><i class="fa fa-fw fa-tag"></i> Categories</a>
+                            </li>
+                            <?php if ($us_lvl == 1) { ?>
+                            <li <?php if ($link == 'r1' ) { echo "class='active'";}?>>
+                                <a href="<?= site_url('Inventory/page/r1'); ?>"><i class="fa fa-fw fa-tags"></i> Sub-categories</a>
+                                
+                            </li>
+                            <?php }?>
+                            
+                            
+                        </ul>
+                    </li>
+                     <!--   <li <?php if ($link == 't1') { echo "class='active'";}?>>
                         <a href="<?= site_url('Inventory/page/t1'); ?>"><i class="fa fa-fw fa-tags"></i> Categories</a>
 
                     </li>
                     <li <?php if ($link == 'r1' ) { echo "class='active'";}?>>
                         <a href="<?= site_url('Inventory/page/r1'); ?>"><i class="fa fa-fw fa-tags"></i> Sub-categories</a>
-                    </li>
+                    </li> -->
                  
                   
                 </ul>

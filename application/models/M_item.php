@@ -166,6 +166,43 @@ class M_item extends CI_Model {
         return true;
       }
 
+      public function updatePrice(Array $arr , $usid = null , $id = null)
+      {
+        $this->db->select('*');
+        $this->db->from(self::TABLE_NAME);
+        $this->db->where(self::PRI_INDEX, $id);
+
+        $result=$this->db->get()->result();
+        $arr2=array_shift($result);
+
+        if($arr2->it_price > $arr['it_price'])
+        {
+            $diff = $arr['it_price'] - $arr2->it_price;
+        }
+        else
+        {
+            $diff = $arr['it_price'] - $arr2->it_price;
+        }
+
+         $arr1 = array(
+          'cat_id' => $arr['ct_category'],
+          'su_id' => $arr['su_category'],
+          'pi_type' => 3,
+          'pi_item' => $id,
+          'pi_frprice' => $arr2->it_price,
+          'pi_toprice' => $arr['it_price'],
+          'pi_prDiff' => $diff,
+          'us_user' => $usid
+
+        );
+
+     
+
+        $this->db->insert('invento_price', $arr1);
+
+        return true;
+      }
+
     /**
      * Updates selected record in the database
      *
