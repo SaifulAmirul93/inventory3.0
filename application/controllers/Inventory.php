@@ -779,6 +779,7 @@ class Inventory extends CI_Controller {
 
             }
 
+        
 
              public function getAjaxSub()
               {
@@ -843,7 +844,6 @@ class Inventory extends CI_Controller {
                       
 
                       $type['cat'] = $ct_id;
-                      //echo "<script>alert($catt_id);</script>";
                   }         
                   
                   $this->load->view($this->parent_page."/ajax/getAjaxSearch",$type );

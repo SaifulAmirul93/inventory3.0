@@ -246,13 +246,7 @@ class M_item extends CI_Model {
          public function orderCount2($st=0,$cat_id=null,$sub_id=null)
         {
             $this->db->like('del_id', 0);
-
-
-
-            // if ($ver != -1) {
-            //     $this->db->like('ord.or_ver', $ver);
-            // }           
-
+     
             $this->db->from('invento_items');
 
               if($st != 0){              
@@ -494,11 +488,8 @@ class M_item extends CI_Model {
             $result = $this->db->get()->result();
             
             if ($result) {
-                // if ($where !== NULL) {
-                //     return array_shift($result);
-                // } else {
                     return $result;
-                // }
+            
             } else {
                 return false;
             }

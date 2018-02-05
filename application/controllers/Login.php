@@ -32,6 +32,10 @@
 	    {
 	      redirect('http://localhost/inventoryR1.0_lab/login','refresh');
 	    }
+	    public function event()
+	    {
+	      redirect('http://localhost/inventoryR1.0_event/login','refresh');
+	    }
 	    //sql injection alert ***
 	    function signin(){
 	    	//$this->load->library("encrypt");
@@ -83,7 +87,10 @@
 	    {
 	      $this->session->unset_userdata('us_id');
 	      $this->session->unset_userdata('us_lvl');
-	      $this->session->sess_destroy();
+				$this->session->sess_destroy();
+
+				$this->session->set_flashdata('success', 'Successfully Logout!!!');
+
 	      redirect(site_url('login'),'refresh');
 	    }
 	}

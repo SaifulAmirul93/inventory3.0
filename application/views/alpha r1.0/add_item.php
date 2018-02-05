@@ -215,7 +215,6 @@ $(document).ready(function() {
 	</div>
 <script>
 
-
   $(function () {
       var demo1 = $('#holiday_color');
 
@@ -228,7 +227,6 @@ $(document).ready(function() {
             $(this).val(color).css('background-color', color);
           }
       });
-    //bootstrap WYSIHTML5 - text editor
-  //   $(".textarea").wysihtml5();
+  
    });
 </script>

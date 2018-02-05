@@ -85,7 +85,7 @@ $(document).ready(function() {
                             
                             
                        
-                            <div class="col-md-4">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="input" class="col-sm-3 control-label">Category</label>
                                 <div class="col-sm-9">
