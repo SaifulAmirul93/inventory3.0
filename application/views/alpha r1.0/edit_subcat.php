@@ -10,15 +10,17 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                             Sub-categories 
-                            <small>Edit Sub-categories</small>
+                             Sub-category
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="<?= site_url('Inventory/page/a1'); ?>">Dashboard</a>
                             </li>
+                             <li>
+                                    <i class="fa fa-list"></i><a href="<?= site_url('Inventory/page/r1'); ?>"> Sub-Category List</a>
+                            </li>
                             <li class="active">
-                                <i class="fa fa-plus-square"></i> Edit Sub-categories 
+                                <i class="fa fa-pencil"></i> Edit Sub-category 
                             </li>
                         </ol>
                     </div>
@@ -37,7 +39,7 @@
 
                                                                <div class="row">
                                             <div class=" col-md-4">
-                                                <h3 class="page-header">Sub-categories Details</h3>
+                                                <h3 class="page-header">Sub-category Detail</h3>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -68,7 +70,7 @@
                                             <div class="form-group">
                                               <div class="form-group">
                                                         <label class="col-md-2" >Category :</label> 
-                                                        <div class=" col-md-4">  
+                                                        <div class=" col-md-3">  
                                                                 <select class="form-control" name="cat_id" id="cat_id">
                                                                 <option value="-1" >Select Category</option>
                                                            <?php foreach ($lvl as $key) {
@@ -82,27 +84,14 @@
                                           </div>
                                         </div>
 
-                                         
-                                          <div class="row">
-                                                <div class="form-group">
-                                                    <div class="form-group">
-                                                        <label class="col-md-2" >Place :</label> 
-                                                        <div class=" col-md-3">  
-                                                                <input class="form-control" name="su_place" id="su_place" value="<?= $arr->su_place; ?>">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                         </div>
 
-                                        
-                                    
                                         <div class="row">
                                                 <div class="form-group">
                                                 <div class="clear" style="height:10px;"></div>
                                                     <div class="form-group">
                                                         <label class="col-md-2" >Description :</label> 
                                                         <div class="clear" style="height:20px;"></div>
-                                                     <div class=" col-md-12">  
+                                                     <div class=" col-md-3">  
                                                 <textarea name="su_descrp" id="su_descrp" class="textarea" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"><?= $arr->su_descrp; ?></textarea>
                                                        </div>
                                                     </div>

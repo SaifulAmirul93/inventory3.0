@@ -2,7 +2,7 @@
 <html >
 <head>
   <meta charset="UTF-8">
-  <title>Nasty  Inventory - Alpha 1.0</title>
+  <title>Nasty  Inventory - ver 4.0</title>
   
   
   
@@ -16,7 +16,7 @@
 	<div
 	 class="container">
 	<img src="<?= base_url(); ?>/img/logo-3.png" alt="logo" class="logo-default"/>
-		<h1 style="color: #fff">Raw Material</h1>
+		<h1 style="color: #fff">Version 4.0</h1>
 		
 
 
@@ -54,6 +54,16 @@
 		<form class="form" action="<?= site_url('Login/signin'); ?>" method="post">
 			<input type="text" placeholder="Username" name="username" id="username">
 			<input type="password" placeholder="Password" name="pass" id="pass">
+			<select name="access" id="access">
+                <option value="">Raw Material</option>
+                <option value="">Apparel</option>
+                <option value="">Merchandise</option>
+                <option value="">Event</option>
+                <option value="">Project X</option>
+                <option value="">Lab</option>
+                
+                
+            </select>
 			<button type="submit" id="login-button">Login</button>
 		</form>
 	</div>

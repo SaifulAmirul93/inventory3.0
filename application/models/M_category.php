@@ -47,11 +47,20 @@ class M_category extends CI_Model {
         }
     }
      public function getList($where = NULL) {
-        // echo "<script>alert($where);</script>";
 
         $this->db->select("*");
         $this->db->from(self::TABLE_NAME);
         $this->db->where('cat_id', $where);
+        $result = $this->db->get()->result();
+
+        return $result;
+
+    }
+    public function getList1($where = NULL) {
+
+        $this->db->select("*");
+        $this->db->from(self::TABLE_NAME);
+        $this->db->where('ty_id', $where);
         $result = $this->db->get()->result();
 
         return $result;
@@ -117,23 +126,21 @@ class M_category extends CI_Model {
         public function getAll($where = null , $all = false, $del = 0)
         {
             $this->db->select('*');
-            $this->db->from(self::TABLE_NAME);
+            $this->db->from('invento_categories ca');
             if ($where !== NULL) {
                 if (is_array($where)) {
                     foreach ($where as $field=>$value) {
                         $this->db->where($field, $value);
                     }
                 } else {
-                    $this->db->where(self::PRI_INDEX, $where);
+                    $this->db->where('ca.ct_id', $where);
                 }
             }
             if($del != 1){              
-                $this->db->where('ct_del', $del);
+                $this->db->where('ca.del', $del);
             } 
-            // if (!$all) {
-            //     $this->db->where('cat_id >', 0);
-            // }           
-            // $this->db->join('category_item', 'cat_id = catt_id', 'left');
+            $this->db->join('type ty', 'ca.ty_id = ty.ty_id', 'left');
+          
             $result = $this->db->get()->result();
             if ($result) {
                 if ($where !== NULL) {
@@ -166,7 +173,7 @@ class M_category extends CI_Model {
      public function del($data = array(), $where = array()) {
             if (!is_array($where)) {
                 $where =array(self::PRI_INDEX => $where);
-                $del_id =array('ct_del' => $data);
+                $del_id =array('del' => $data);
             }
           $this->db->update(self::TABLE_NAME, $del_id, $where);
           return $this->db->affected_rows();

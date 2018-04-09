@@ -127,8 +127,6 @@ class M_item extends CI_Model {
         $result=$this->db->get()->result();
         $arr=array_shift($result);
 
-
-        // $arr = array_shift($this->db->get()->result());
         if($st==1)
         {
           $total = $arr->it_qty + $qty;
@@ -260,34 +258,6 @@ class M_item extends CI_Model {
             return $this->db->count_all_results();
         }
 
-
-
-      // public function getList()
-      //   {
-
-
-      //       $arr = $this->db->select('*')->from(self::TABLE_NAME)->get();
-            
-            /*$this->db->select('*');
-            $this->db->from(self::TABLE_NAME);*/
-            /*  if ($where !== NULL) {
-            if (is_array($where)) {
-                foreach ($where as $field=>$value) {
-                    $this->db->where($field, $value);
-                }
-            } else {
-                $this->db->where(self::PRI_INDEX, $where);
-            }
-        }*/
-
-           /* $arr = $this->db->get();*/
-
-           /* for ($i=0; $i < sizeof($result); $i++) { 
-                $result[$i]->supplier = $this->db->get()->result();
-            }*/
-        //     return $arr->result();
-        // }
-
          public function getLvl(){
             $this->db->select("*");
             $this->db->from('invento_categories');
@@ -305,15 +275,27 @@ class M_item extends CI_Model {
                         $this->db->where($field, $value);
                     }
                 } else {
-                    $this->db->where(self::PRI_INDEX, $where);
+                    $this->db->where('it.it_id', $where);
                 }
             }
-            if (!$all) {
-                $this->db->where('it.it_id >', 0);
-            }           
-            $this->db->join('invento_categories cat', 'it.ct_category = cat.ct_id', 'left');
+                    
+
+            $this->db->join('item_img ii', 'ii.item_id = it.it_id', 'left');
+
+            $this->db->join('barcode ba', 'ba.item_id = it.it_id', 'left');
+
+            $this->db->join('unit un', 'un.un_id = it.un_id', 'left');
+
+            $this->db->join('shelf sh', 'sh.sh_id = it.sh_id', 'left');
+
+            $this->db->join('currency cu', 'cu.cu_id = it.cu_id', 'left');
+
+            $this->db->join('type ty', 'ty.ty_id = it.ty_id', 'left');
 
             $this->db->join('invento_subcategories sub', 'it.su_category = sub.su_id', 'left');
+
+            $this->db->join('invento_categories ct', 'ct.ct_id = sub.cat_id', 'left');
+            
 
             $result = $this->db->get()->result();
             
@@ -331,25 +313,17 @@ class M_item extends CI_Model {
         {
             $this->db->select('*');
             $this->db->from('invento_items it');
-            // if ($where !== NULL) {
-            //     if (is_array($where)) {
-            //         foreach ($where as $field=>$value) {
-            //             $this->db->where($field, $value);
-            //         }
-            //     } else {
-            //         $this->db->where(self::PRI_INDEX, $where);
-            //     }
-            // }
+        
             if($del != 3){              
                 $this->db->where('it.del_id', $del);
             }   
             if (!$all) {
                 $this->db->where('it.it_id >', 0);
             }           
-            $this->db->join('invento_categories cat', 'it.ct_category = cat.ct_id', 'left');
 
             $this->db->join('invento_subcategories sub', 'it.su_category = sub.su_id', 'left');
-
+            $this->db->join('invento_categories cat', 'sub.cat_id = cat.ct_id', 'left');
+            
             $this->db->order_by('it.it_name', 'desc');
 
             if ($limit !== null && $start !== null) {
@@ -359,11 +333,7 @@ class M_item extends CI_Model {
             $result = $this->db->get()->result();
             
             if ($result) {
-                // if ($where !== NULL) {
-                //     return array_shift($result);
-                // } else {
                     return $result;
-                // }
             } else {
                 return false;
             }

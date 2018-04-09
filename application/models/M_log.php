@@ -26,15 +26,7 @@ class M_log extends CI_Model {
         $this->db->select('*');
         $this->db->from(self::TABLE_NAME);
          $this->db->where(self::PRI_INDEX, $where);
-        // if ($where !== NULL) {
-        //     if (is_array($where)) {
-        //         foreach ($where as $field=>$value) {
-        //             $this->db->where($field, $value);
-        //         }
-        //     } else {
-        //         $this->db->where(self::PRI_INDEX, $where);
-        //     }
-        // }
+  
         $result = $this->db->get()->result();
 
         if ($result) {
@@ -57,31 +49,6 @@ class M_log extends CI_Model {
 
         return $result;
 
-
-
-
-        // $this->db->select('*');
-        // $this->db->from(self::TABLE_NAME);
-        // if ($where !== NULL) {
-        //     if (is_array($where)) {
-        //         foreach ($where as $field=>$value) {
-        //             $this->db->where($field, $value);
-        //         }
-        //     } else {
-        //         $this->db->where('cat_id', $where);
-        //     }
-        // }
-        // $result = $this->db->get()->result();
-        // echo "<script>alert($result);</script>";
-        // if ($result) {
-        //     if ($where !== NULL) {
-        //         return array_shift($result);
-        //     } else {
-        //         return $result;
-        //     }
-        // } else {
-        //     return false;
-        // }
     }
 
     /**
@@ -176,34 +143,6 @@ class M_log extends CI_Model {
         return $this->db->affected_rows();
     }
 
-    
-
-
-      // public function getList()
-      //   {
-
-
-      //       $arr = $this->db->select('*')->from(self::TABLE_NAME)->get();
-            
-            /*$this->db->select('*');
-            $this->db->from(self::TABLE_NAME);*/
-            /*  if ($where !== NULL) {
-            if (is_array($where)) {
-                foreach ($where as $field=>$value) {
-                    $this->db->where($field, $value);
-                }
-            } else {
-                $this->db->where(self::PRI_INDEX, $where);
-            }
-        }*/
-
-           /* $arr = $this->db->get();*/
-
-           /* for ($i=0; $i < sizeof($result); $i++) { 
-                $result[$i]->supplier = $this->db->get()->result();
-            }*/
-        //     return $arr->result();
-        // }
 
          public function getLvl(){
             $this->db->select("*");

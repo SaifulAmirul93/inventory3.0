@@ -20,15 +20,15 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                             Sub-categories
-                            <small>List</small>
+                             Sub-category
+                    
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="<?= site_url('Inventory/page/a1'); ?>">Dashboard</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-archive"></i> Sub-categories List
+                                <i class="fa fa-list"></i> Sub-Category List
                             </li>
                         </ol>
                     </div>
@@ -73,7 +73,7 @@
                                                          
   
                             <a href="<?= site_url('Inventory/page/r2'); ?>">                             
-                            <button type="button" class="btn btn-success"><i class="fa fa-plus"></i> Add Sub-Categories</button>
+                            <button type="button" class="btn btn-success"><i class="fa fa-plus"></i> Add Sub-Category</button>
                             </a>
                        
 
@@ -86,12 +86,10 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Sub-catgories Code</th>
-                                            <th>Sub-categories Name</th>
+                                            <th>SKU Code</th>
+                                            <th>Sub-category Name</th>
                                             <th>Category</th>
-                                            <!-- <th>Place</th>
-                                            <th>Description</th> -->
-                                           <!--  <th>Date Added</th> -->
+                                            <th>Type</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -109,9 +107,8 @@
                                             </td>
                                             <td><?= $sub->su_name; ?></td>
                                             <td><?= $sub->ct_name; ?></td>
-                                            <!-- <td><?= $sub->place; ?></td>
-                                            <td><?= $sub->descrp; ?></td> -->
-                                           <!--  <td><?= $sub->date_added; ?></td> -->
+                                            <td><?= $sub->ty_name; ?></td>
+                                    
                                             <td>
                                             <center>
                                             

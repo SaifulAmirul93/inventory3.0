@@ -21,7 +21,32 @@
 </style>
     <div id="wrapper">
 
-       
+    <div class="row">                   
+                        <div class="col-md-12">
+                            <?php if($this->session->flashdata('success')){ ?>
+                                    <div class="alert alert-success alert-dismissable">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                                        <strong><i class="fa fa-check"></i>  Success!</strong> <?= $this->session->flashdata('success'); ?>
+                                    </div>
+                            <?php } if($this->session->flashdata('warning')){
+                            ?>
+                                    <div class="alert alert-warning alert-dismissable">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                                        <strong><i class="fa fa-exclamation-triangle"></i> Warning!</strong> <?= $this->session->flashdata('warning'); ?>
+                                    </div>
+                            <?php } if($this->session->flashdata('info')){ ?>
+                                    <div class="alert alert-info alert-dismissable">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                                        <strong><i class="fa fa-info-circle"></i> Info!</strong> <?= $this->session->flashdata('info'); ?>
+                                    </div>
+                            <?php } if($this->session->flashdata('error')){ ?>
+                                    <div class="alert alert-danger alert-dismissable">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                                        <strong><i class="fa fa-times-circle-o"></i> Error!</strong> <?= $this->session->flashdata('error'); ?> 
+                                    </div>
+                            <?php } ?>
+                        </div>
+    </div>
         
             
 
@@ -44,6 +69,83 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-md-12"> 
+                                        <a href="#" class="link">
+                                            <center>
+                                                <img src="<?= base_url(); ?>/img/if_fork2_62573.png" alt="logo"/>
+                                                <br>
+                                                <span class="largefont">Stock-In</span>
+                                            </center>
+                                        </a>
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                            <a href="#">
+                               
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a href="#">
+                                        
+                                            <center>
+                                                <img src="<?= base_url(); ?>/img/if_fork5_62576.png" alt="logo"/>
+                                            
+                                            <br>
+                                            <span class="largefont">Stock-Out</span>
+                                            </center>
+                                        </a>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a href="#">
+                                        
+                                            <center>
+                                                <img src="<?= base_url(); ?>/img/if_self2_62588.png" alt="logo"/>
+                                            <br>
+                                            <span class="largefont">Warehouse</span>
+                                            </center>
+                                        </a>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                            <a href="#">
+                               
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                <i class="fa fa-dashboard"></i> Total statistic
+                            </li>
+                        </ol>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-lg-4 col-md-6">
                         <div class="panel panel-primary">
@@ -343,83 +445,13 @@
                 </div>
 
 
-                <div class="row">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="panel panel-red">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    
-                                    <div class="col-xs-9 text-left">
-                                        <div class="huge"><?php echo $totalIn ?></div>
-                                        <div>Total Check-In</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <a href="<?= site_url('Inventory/page/i2'); ?>">
-                                    <span class="pull-left">
-                                    View Details
-                                    </span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    </a>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-4 col-md-6">
-                        <div class="panel panel-yellow">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    
-                                    <div class="col-xs-9 text-left">
-                                        <div class="huge"><?php echo $totalOut ?></div>
-                                        <div>Total Check-Out</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                <a href="<?= site_url('Inventory/page/i2'); ?>">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    </a>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-4 col-md-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <div class="row">
-                                   
-                                    <div class="col-xs-9 text-left">
-                                        <div class="huge"><?php echo $totalDel ?></div>
-                                        <div>Price Change</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
+                
                 
              
                 
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="panel panel-default">
+                        <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Item Statistic</h3>
                             </div>

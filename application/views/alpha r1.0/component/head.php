@@ -37,35 +37,49 @@
 
     <link href="<?= base_url(); ?>asset/plugin/bootstrap-colorpicker-plus-master/css/bootstrap-colorpicker.min.css" rel="stylesheet">
 
-  <link href="<?= base_url(); ?>asset/plugin/bootstrap-colorpicker-plus-master/css/bootstrap-colorpicker-plus.css" rel="stylesheet">
-        
-   <!-- Bootstrap Core JavaScript -->
-        <script src="<?= base_url(); ?>js/jquery-1.11.1.js"></script>       
+    <link href="<?= base_url(); ?>asset/plugin/bootstrap-colorpicker-plus-master/css/bootstrap-colorpicker-plus.css" rel="stylesheet">
 
-       <script src="<?= base_url(); ?>js/bootstrap.min.js"></script>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    
+    <link href="<?= base_url(); ?>asset/plugin/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.css" rel="stylesheet">
+    
+   <!-- Bootstrap Core JavaScript -->
+        <script src="<?= base_url(); ?>js/jquery-1.11.1.js"></script>
+
+        <script src="<?= base_url(); ?>js/jquery.redirect.js"></script>       
+
+        <script src="<?= base_url(); ?>js/bootstrap.min.js"></script>
 
         <script src="<?= base_url(); ?>asset/plugin/bootbox/bootbox.min.js"></script>
-
-
 
         <script src="<?= base_url(); ?>asset/plugin/bootstrap-datatables/jquery.dataTables.min.js"></script>
  
         <script src="<?= base_url(); ?>asset/plugin/bootstrap-datatables/dataTables.bootstrap.min.js"></script>
 
         <script src="<?= base_url(); ?>asset/plugin/datatables-responsive/dataTables.responsive.js"></script>
-
+        
         <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+
         <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+
         <script src="https://www.amcharts.com/lib/3/pie.js"></script>
+
         <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
-        <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
 
         <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
 
         <script src="<?= base_url(); ?>asset/plugin/notify/notify.js"></script>
 
+        <script src="<?= base_url(); ?>js/jquery.js"></script>
+        
+        <script src="https://rawgit.com/kabachello/jQuery-Scanner-Detection/master/jquery.scannerdetection.js"></script>
 
-   
 
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+        
 </head>
 <body>

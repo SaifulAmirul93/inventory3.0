@@ -109,7 +109,33 @@ li.message-footer {
 ul.alert-dropdown {
     width: 200px;
 }
+.largefont { 
 
+  font-size: 30px; 
+}
+.left-inner-addon {
+    position: relative;
+}
+.left-inner-addon input {
+    padding-left: 30px;    
+}
+.left-inner-addon i {
+    position: absolute;
+    right: 0px;
+    padding: 9px 12px;
+    pointer-events: none;
+}
+a.link-to:link, a.link-to:visited {
+    /* background-color: #f44336; */
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+a.link-to:hover {
+ /* background-color: transparent; */
+}
 /* Side Navigation */
 
 @media(min-width:768px) {

@@ -6,12 +6,12 @@ class M_type extends CI_Model {
     /**
      * @name string TABLE_NAME Holds the name of the table in use by this model
      */
-    const TABLE_NAME = 'invento_categories';
+    const TABLE_NAME = 'type';
 
     /**
      * @name string PRI_INDEX Holds the name of the tables' primary index used in this model
      */
-    const PRI_INDEX = 'ct_id';
+    const PRI_INDEX = 'ty_id';
 
     /**
      * Retrieves record(s) from the database

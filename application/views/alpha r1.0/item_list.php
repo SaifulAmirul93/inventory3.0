@@ -1,7 +1,3 @@
-
-
-
-
 <script>
 
 $(document).ready(function() {

@@ -20,15 +20,15 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                             Categories
-                            <small>List</small>
+                             Category
+                            
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="<?= site_url('Inventory/page/a1'); ?>">Dashboard</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-archive"></i> Categories List
+                                <i class="fa fa-archive"></i> Category List
                             </li>
                         </ol>
                     </div>
@@ -86,11 +86,9 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Category Code</th>
-                                            <th>Categories Name</th>
-                                            <th>Place</th>
-                                            <th>Description</th>
-                                           <!--  <th>Date Added</th> -->
+                                            <th>SKU Code</th>
+                                            <th>Category Name</th>
+                                            <th>Type</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -104,11 +102,9 @@
                                         <tr>
                                             <td><?= $n ?></td>
 
-                                            <td><?= $cat->ct_sku ?>
-                                            </td>
+                                            <td><?= $cat->ct_sku ?></td>
                                             <td><?= $cat->ct_name; ?></td>
-                                            <td><?= $cat->ct_place; ?></td>
-                                            <td><?= $cat->ct_descrp; ?></td>
+                                            <td><?= $cat->ty_name; ?></td>
                                           
                                             <td>
                                             <center>

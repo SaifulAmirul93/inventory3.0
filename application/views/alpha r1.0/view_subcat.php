@@ -10,15 +10,19 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                             Categories 
-                            <small>View Sub-Categories</small>
+                             Sub-Category 
+                            
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="<?= site_url('Inventory/page/a1'); ?>">Dashboard</a>
                             </li>
+                            <li>
+                                
+                                    <i class="fa fa-list"></i><a href="<?= site_url('Inventory/page/r1'); ?>"> Sub-Category List</a>
+                            </li>
                             <li class="active">
-                                <i class="fa fa-plus-square"></i> View Sub-Categories
+                                <i class="fa fa-eye"></i> View Sub-Category
                             </li>
                         </ol>
                     </div>
@@ -30,11 +34,15 @@
                     <div class="col-lg-12">
                     <!-- /.col-lg-12 -->
                   
-                       <form role="form" method="post" action="<?= site_url('Inventory/updateCat'); ?>">
+                       
 
 
 
-
+                                        <div class="row">
+                                            <div class=" col-md-4">
+                                                <h3 class="page-header">Sub-category Detail</h3>
+                                            </div>
+                                        </div>
                                               <div class="row">
                                                 <div class="form-group">
                                                 
@@ -86,8 +94,8 @@
                                                     <div class="form-group">
                                                         <label class="col-md-2" >Description :</label> 
                                                         <div class="clear" style="height:20px;"></div>
-                                                     <div class=" col-md-12">  
-                                                <textarea name="item_desc" id="item_desc" class="textarea" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"><?= $arr->su_descrp; ?></textarea>
+                                                     <div class=" col-md-3">  
+                                                <?= $arr->su_descrp; ?>
                                                        </div>
                                                     </div>
                                                 </div>
@@ -101,7 +109,7 @@
                                         <div class="clear" style="height: 50px;"></div>
                                           <div class="row">
                                             <div class=" col-md-5">
-                                            <a href="<?= site_url('Inventory/page/r3?edit=').$this->my_func->scpro_encrypt($arr->su_id); ?>" >
+                                                <a href="<?= site_url('Inventory/page/r3?edit=').$this->my_func->scpro_encrypt($arr->su_id); ?>" >
                                                 <button type="button" class="btn btn-success">Edit</button>
                                                 </a>
                                                 <a href="<?= site_url('Inventory/page/r1'); ?>">
@@ -110,10 +118,10 @@
                                             </div> 
                                         </div> 
                                         <div class="clear" style="height: 50px;"></div>                
-                    </form>
+                    
                 
                 
-                    <!-- <div id="sprintcontainer"> -->
+                    
                     </div>
                   
             </div>

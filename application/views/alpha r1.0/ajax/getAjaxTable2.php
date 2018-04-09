@@ -47,7 +47,7 @@
                                             <?php if ($us_lvl != 5) { ?>
                                             &nbsp;&nbsp;&nbsp;
                                             <a href="<?= site_url('Inventory/page/i1.1?edit=').$this->my_func->scpro_encrypt($item->it_id); ?>">
-                                            <button type="button" class="btn btn-warning btn-circle btn-xs" title="View"><i class="fa fa-pencil"></i></button></a>
+                                            <button type="button" class="btn btn-warning btn-circle btn-xs" title="Edit"><i class="fa fa-pencil"></i></button></a>
                                             <?php } ?>
 
                                             <?php if (($us_lvl != 4) && ($us_lvl != 5)) { ?>

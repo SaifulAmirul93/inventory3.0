@@ -83,6 +83,12 @@
 	        	echo "success";
 	        }
 	    }
+
+	    public function forget()
+	    {
+	        $this->load->view("alpha r1.0/forget");
+	    	
+	    }
 	    public function logout()
 	    {
 	      $this->session->unset_userdata('us_id');

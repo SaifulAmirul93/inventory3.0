@@ -24,11 +24,24 @@ class Inventory extends CI_Controller {
 
 
         $link['link'] = $key;
+
+        
+
 	     	$this->load->view($this->component_parent.'/head', FALSE);
 
 	    	$this->load->view($this->component_parent.'/header', $link, FALSE);
         
-	    	$this->load->view($this->component_parent.'/sidemenu',$link, FALSE);
+        $this->load->view($this->component_parent.'/sidemenu',$link, FALSE);
+        
+        if (isset($data['title'])) {
+
+          $T['title'] = $data['title'];
+
+          $this->load->view($this->component_parent.'/title',$T, FALSE);
+          
+	    	}else{
+	    		$T = null;
+	    	}
 
         $this->load->view($this->parent_page.'/'.$page, $data, false);
                 
@@ -89,10 +102,14 @@ class Inventory extends CI_Controller {
                   break; 
 
                   case "i1" :// add item
-                        //start added
+                        
                         $this->load->database();
                         $this->load->model('m_category');
+                        $this->load->model('m_unit');
+                        $this->load->model('m_type');
                         $arr['lvl'] = $this->m_category->getLvl();
+                        $arr['unit'] = $this->m_unit->get();
+                        $arr['type'] = $this->m_type->get();
                         
                         
                         $data['display']=$this->load->view($this->parent_page.'/add_item',$arr,true);
@@ -103,22 +120,29 @@ class Inventory extends CI_Controller {
 
                   case "i1.1" :// edit item
                         $this->load->library('my_func');
-                        if ($this->input->get('edit')) {
+                        if ($this->input->get('edit')) 
+                        {
                         
-                        $itemId = $this->my_func->scpro_decrypt($this->input->get('edit'));
-                        //echo $staffId;
-                        $this->load->database();
-                        $this->load->model('m_item');
-                       $this->load->model('m_category');
-                        $arr['lvl'] = $this->m_item->getLvl();
-                        $arr['lvl2'] = $this->m_category->getLvl2();
-                        $arr['arr'] = $this->m_item->getAll($itemId);
+                            $itemId = $this->my_func->scpro_decrypt($this->input->get('edit'));
+                            
+                            $this->load->database();
+
+                            $this->load->model('m_item');
+                            $this->load->model('m_category');
+                            $this->load->model('m_type');
+                            $this->load->model('m_unit');
+                            $this->load->model('m_currency');
+                            $this->load->model('m_item_img');
+
+                            $arr['type'] = $this->m_type->get();
+                            $arr['unit'] = $this->m_unit->get();
+                            $arr['curr'] = $this->m_currency->get();
+                            $arr['lvl'] = $this->m_item->getLvl();
+                            $arr['lvl2'] = $this->m_category->getLvl2();
+                            $arr['arr'] = $this->m_item->getAll($itemId);
                         
 
-                      } 
-                        
-                        
-                        
+                        } 
                         $data['display']=$this->load->view($this->parent_page.'/edit_item',$arr,true);
                         $this->_show('display', $data, 'i1');
                         
@@ -135,7 +159,7 @@ class Inventory extends CI_Controller {
                         $this->load->model('m_category');
                         $arr['lvl'] = $this->m_item->getLvl();
                         $arr['lvl2'] = $this->m_category->getLvl2();
-                        $arr['arr'] = $this->m_item->getAll($itemId);
+                        $arr['arr'] = $this->m_item->getAll($itemId,true);
                         
 
                       } 
@@ -146,9 +170,11 @@ class Inventory extends CI_Controller {
                   break;  
 
 
-                  case "i2" :// item list
-                         if ($this->input->get('page')) {
-                        $p = $this->input->get('page');
+                  case "i2" :// Warehouse Shelf
+
+                        if ($this->input->get('page')) 
+                        {
+                          $p = $this->input->get('page');
                         }else{
                             $p = 0;
                         }
@@ -259,17 +285,12 @@ class Inventory extends CI_Controller {
                         
                   break;  
 
-                   case "t2" :// dashboard
-                        //start added
-                        // $this->load->database();
-                        // $this->load->model('m_category');
-                        // $this->load->library('my_func');
+                   case "t2" :// add item
+                        $this->load->database();
+                        $this->load->model('m_type');
 
-                        // $arr['arr'] = $this->m_category->getAll();
-
-                        
-                        
-                        $data['display']=$this->load->view($this->parent_page.'/add_cat');
+                        $arr['type'] = $this->m_type->get();
+                        $data['display']=$this->load->view($this->parent_page.'/add_cat',$arr,true);
                         $this->_show('display', $data, 't1');
                         
                   break;  
@@ -279,21 +300,18 @@ class Inventory extends CI_Controller {
                         if ($this->input->get('edit')) {
                         
                         $itemId = $this->my_func->scpro_decrypt($this->input->get('edit'));
-                        //echo $staffId;
+                      
                         $this->load->database();
                         $this->load->model('m_category');
-                       
+                        $this->load->model('m_type');
+                          
                         
                         $arr['arr'] = $this->m_category->getAll($itemId);
+                        $arr['type'] = $this->m_type->get();
                         
-
-                      } 
-                        
-                        $this->_show('display','t1');
-                        
-                        $data['display']=$this->load->view($this->parent_page.'/edit_cat',$arr);
-                       
-                        
+                        $data['display']=$this->load->view($this->parent_page.'/edit_cat',$arr,true);
+                        $this->_show('display', $data, 't1');
+                        }      
                   break;   
 
                   case "t4" :// view item
@@ -308,16 +326,16 @@ class Inventory extends CI_Controller {
                         
                         $arr['arr'] = $this->m_category->getAll($itemId);
                         
-
+                        $data['display']=$this->load->view($this->parent_page.'/view_cat',$arr,true);
+                        $this->_show('display',$data,'t1');
                       } 
-                        $this->_show('display','t1');
-                        $data['display']=$this->load->view($this->parent_page.'/view_cat',$arr);
+                        
                         
                         
                   break;   
 
                   case "r1" :// sub_cat list
-                        //start added
+                        
                         $this->load->database();
                         $this->load->model('m_subcat');
                         $this->load->library('my_func');
@@ -359,11 +377,10 @@ class Inventory extends CI_Controller {
 
                       } 
                         
-                        $this->_show('display','r1');
                         
-                        $data['display']=$this->load->view($this->parent_page.'/edit_subcat',$arr);
-                       
-                        
+                        $data['display']=$this->load->view($this->parent_page.'/edit_subcat',$arr,true);
+                        $this->_show('display',$data,'r1');
+  
                   break;   
                      case "r4" :// view item
                         $this->load->library('my_func');
@@ -374,13 +391,14 @@ class Inventory extends CI_Controller {
                         $this->load->database();
                         $this->load->model('m_subcat');
                        
-                       $arr['lvl'] = $this->m_subcat->getLvl(); 
+                        $arr['lvl'] = $this->m_subcat->getLvl(); 
                         $arr['arr'] = $this->m_subcat->getAll($itemId);
                         
 
                       } 
-                        $this->_show('display','t1');
-                        $data['display']=$this->load->view($this->parent_page.'/view_subcat',$arr);
+                        
+                        $data['display']=$this->load->view($this->parent_page.'/view_subcat',$arr,true);
+                        $this->_show('display',$data,'r1');
                         
                         
                   break;   
@@ -424,7 +442,7 @@ class Inventory extends CI_Controller {
                   break;  
 
                    case "s2" :// user profile
-                        //start added
+                        
                         $this->load->database();
                         $this->load->model('m_user');
                         $this->load->library('my_func');
@@ -487,7 +505,103 @@ class Inventory extends CI_Controller {
                         $data['display']=$this->load->view($this->parent_page.'/user_view',$arr,true);
                         $this->_show('display', $data, 's1');
                         
-                  break; 
+                  break;
+                  
+                  case "so1":
+                        $data['display']=$this->load->view($this->parent_page.'/stock_in','',true);
+                        $this->_show('display', $data, 'so1');
+                  break;
+
+                  case "so2":
+                        $data['display']=$this->load->view($this->parent_page.'/stock_out','',true);
+                        $this->_show('display', $data, 'so2');
+                  break;
+
+                  case "p2":
+                        $data['display']=$this->load->view($this->parent_page.'/request_form','',true);
+                        $this->_show('display', $data, 'p1');
+                  break;
+
+                  case 'il1':
+                        // if ($this->input->get()) 
+                        // {
+                            $this->load->database();
+                            $this->load->model('m_log2');
+                            $this->load->model('m_item');
+                            $this->load->library('my_func');
+                            
+                            $this->load->library('pagination');
+
+                            // $item = $this->my_func->scpro_decrypt($this->input->get('item'));
+                            $st= $this->input->get('st');
+
+                            $like = null;
+                            $filter = null;
+                            $limit_per_page = 10;
+
+                            $arr['total'] = $this->m_log2->count($filter,$like);   
+
+                            $page = $this->uri->segment(5,1);
+
+                            $page--;
+
+                            $arr['numPage'] = $page*10;
+                            $arr['result'] = $this->m_log2->get_curr($limit_per_page , $arr['numPage'] , $filter , $like);
+                            // $arr['arr'] = $this->m_item->getAll($item); 
+                            $config['base_url'] = site_url('inventory/page/il1');
+                            $config['total_rows'] = $arr['total'];
+                            $config['per_page'] = $limit_per_page;
+                            $config["uri_segment"] =5;
+                            
+                            // custom paging configuration
+                            $config['num_links'] = 3;
+                            $config['use_page_numbers'] = TRUE;
+                            $config['reuse_query_string'] = TRUE;
+                            
+                            $config['cur_tag_open'] = '<li><a class="current"><strong>';
+                            $config['cur_tag_close'] = '</strong></a></li>';
+                            $config['num_tag_open'] = '&nbsp;<li>';
+                            $config['num_tag_close'] = '</li>&nbsp;';
+                            $config['prev_tag_open'] = '<li>';
+                            $config['prev_tag_close'] = '</li>';
+                            $config['last_tag_open'] = '<li>';
+                            $config['last_tag_close'] = '</li>';
+                            $config['next_tag_open'] = '<li>';
+                            $config['next_tag_close'] = '</li>';
+                            $config['first_tag_open'] = '<li>';
+                            $config['first_tag_close'] = '</li>';
+                            $config['next_link'] = 'Next';
+                            $config['prev_link'] = 'Previous';
+                            $this->pagination->initialize($config);
+                            $arr["link"] = $this->pagination->create_links();
+                            $data['display']=$this->load->view($this->parent_page.'/item_log',$arr,true);
+                            
+                        // }
+                            $this->_show('display', $data, 'il1');
+                  break;
+
+
+                  case 'ty1':
+                        $data['title'] = '<i class="fa fa-fw fa-list"></i>Type';
+
+                        $this->_loadCrud();
+                        $crud = new grocery_CRUD();
+                        $crud->set_table('type');
+                        $crud->set_subject('Type');
+                        $crud->required_fields('ty_name');
+                        $crud->columns('ty_id','ty_name','ty_desc');
+
+                        $crud->display_as('ty_id','No')
+                        ->display_as('ty_name','Type Name')
+                        ->display_as('ty_desc','Description');
+
+
+                        $output = $crud->render();
+                        
+                        
+                        $data['display'] = $this->load->view($this->parent_page.'/crud' , $output , true);
+		    		            $this->_show('display' , $data , $key); 
+                  break;
 
                   default:
                         $this->_show();
@@ -517,35 +631,59 @@ class Inventory extends CI_Controller {
                 public function addItem()
               {
                       if ($this->input->post()) {
-                        $arr = $this->input->post();          
                         $this->load->database();
                         $this->load->model('m_item');
-                        //$this->load->library('my_func');
+
+                        $arr = $this->input->post();  
+
                         
+                        
+                        
+
                         $arr2 = array(
                             "it_sku" => $arr['sku'],
-                            "it_name" => $arr['name'],                            
-                            "ct_category" => $arr['category'],
+                            "it_name" => $arr['name'], 
+
+                            "ty_id" => $arr['type'],
                             "su_category" => $arr['subcategory'],
+                            "un_id" => $arr['unit'], 
+
                             "it_danger" => $arr['danger'],
                             "it_color" => $arr['color'],
-                            "it_qty" => $arr['qty'],                    
+                            "it_qty" => $arr['qty'],
+
+                            "cu_id" => $arr['curr'],                                                
                             "it_price" => $arr['price'],
-                            "it_descrp" => $arr['desc']
+                            "ver" => 1
+
                         );
 
-                        $result = $this->m_item->insert($arr2);
+                          $itemid = $this->m_item->insert($arr2);
 
-                          if($result)
-                           {
+
+                          $this->load->model('m_barcode');
+                          $this->load->model('m_item_img');
+                          if($itemid) 
+                          {
+                              $arr4 = array(
+                                'item_id' => $itemid,
+                                'ii_url' => $this->do_upload('fileImg','./prod_img')
+                                );
+                                $this->m_item_img->insert($arr4);
+
+                              $arr3 = array(
+                                'item_id' => $itemid,
+                                'ba_url' => $this->set_barcode($arr['sku'])
+                                );
+                                $this->m_barcode->insert($arr3);
+                          }
                             $this->session->set_flashdata('success', 'Item are successfully inserted');
                             redirect(site_url('Inventory/page/i2'),'refresh');
-                           }
-                           else
-                           {
+                      }
+                      else 
+                      {
                             $this->session->set_flashdata('error', 'Item are not inserted');
                             redirect(site_url('Inventory/page/i2'),'refresh');
-                           }
                       }
               }
 
@@ -556,7 +694,8 @@ class Inventory extends CI_Controller {
 
                public function addCat()
               {
-                      if ($this->input->post()) {
+                      if ($this->input->post()) 
+                      {
                         $arr = $this->input->post();          
                         $this->load->database();
                         $this->load->model('m_category');
@@ -565,22 +704,19 @@ class Inventory extends CI_Controller {
                         $arr2 = array(
                             "ct_sku" => $arr['sku'],
                             "ct_name" => $arr['name'],                            
-                            "ct_place" => $arr['place'],
+                            "ty_id" => $arr['type'],
                             "ct_descrp" => $arr['descrp']
-                            
                         );
                         $result = $this->m_category->insert($arr2);
 
-                          if($result)
-                           {
-                            $this->session->set_flashdata('success', 'Category details are successfully inserted');
-                            redirect(site_url('Inventory/page/t1'),'refresh');
-                           }
-                           else
-                           {
-                            $this->session->set_flashdata('error', 'Category details are not inserted');
-                            redirect(site_url('Inventory/page/t1'),'refresh');
-                           }
+                          
+                        $this->session->set_flashdata('success', 'Category details are successfully inserted');
+                        redirect(site_url('Inventory/page/t1'),'refresh');    
+                      }
+                      else
+                      {
+                        $this->session->set_flashdata('error', 'Category details are not inserted');
+                        redirect(site_url('Inventory/page/t1'),'refresh');
                       }
               }
 
@@ -616,54 +752,234 @@ class Inventory extends CI_Controller {
                       }
               }
 
+              public function stock_in()
+              {
+                if ($this->input->post()) 
+                {
+                      $arr = $this->input->post();
 
+                      $this->load->database();
+                      
+                      $this->load->model('m_received');
+                      $this->load->model('m_received_item');
+                      $this->load->model('m_received_supplier');
+                      $this->load->model('m_shelf');
+                      $this->load->model('m_item');
+                      $this->load->library('my_func');
 
+                      $arr2 = array(
+                            "dp_id" => $arr['status']
+                        );
+                      
+                      $rec_id = $this->m_received->insert($arr2);
+                        
+                      if ($arr['status'] == -1)
+                      {
+                        $supp = array(
+                          'rec_id' => $rec_id, 
+                          'po_number' => $arr['po'], 
+                          'sup_id' => $this->my_func->scpro_decrypt($arr['supp']) 
+                        );
+                        
+                        $this->m_received_supplier->insert($supp);
+                        
+                      }
+                        $sizeArr = sizeof($arr['itemId']);
+
+                        for ($i=0; $i < $sizeArr; $i++) { 
+
+                            $item = array(
+                              'rec_id' => $rec_id, 
+                              'it_id' => $this->my_func->scpro_decrypt($arr['itemId'][$i]), 
+                              'ri_qty' => $arr['qty'][$i], 
+                              'ri_price' => $arr['price'][$i] 
+                            );
+                            
+                            $this->m_received_item->insert($item);
+
+                            $sh_id = $this->_checkShelf($arr['shelf'][$i]);
+
+                      
+                            $this->_stockUpdate($this->my_func->scpro_decrypt($arr['itemId'][$i]),$arr['qty'][$i],$arr['price'][$i],$arr['status'],1,$rec_id);
+                            
+                           
+                            
+                        }
+
+                        $this->session->set_flashdata('success', 'Stock items have been updated.');
+                        redirect(site_url('Inventory/page/a1'),'refresh');
+
+                }
+              }
+
+              private function _stockUpdate($item = null, $qty = null, $price = null,$dept = null,$st = null,$rec = null)
+              {
+                      $this->load->database();
+
+                      $this->load->model('m_item');
+                      $this->load->model('m_log2');
+
+                      $data=$this->m_item->getAll($item);
+                      $id = $this->my_func->scpro_decrypt($this->session->userdata('id'));
+
+                      if($st == 1)
+                      {
+                          if ($data->it_qty != $qty) 
+                          {
+                            $total = $data->it_qty + $qty;
+                          }
+                          else 
+                          {
+                            $total = "-";
+                          }
+                      }
+                      else if($st == 2)
+                      {
+                          if ($data->it_qty != $qty) 
+                          {
+                            $total = $data->it_qty - $qty;
+                          }
+                          else 
+                          {
+                            $total = "-";
+                          }
+                      }
+                      if($total != "-")
+                      {
+                          $arr1 = array('it_qty' => $total);
+                          $this->m_item->update($arr1,$data->it_id);
+                      }
+                     
+
+                      $arr2 = array(
+                        'it_id' => $data->it_id,
+                        'rec_id' => $rec,
+                        'dp_id' => $dept,
+                        'lo_from' => $data->it_qty,
+                        'lo_to' => $total,
+                        'sta_id' => $st,
+                        'lo_diff' => $qty,
+                        'us_id' => $id,
+                        );
+
+                        $this->m_log2->insert($arr2);
+                        
+                        return true;
+              }
               public function updateItem()
               {
                     if ($this->input->post()) {
-                      $arr = $this->input->post();          
+                      $arr = $this->input->post();
+
                       $this->load->database();
+
                       $this->load->model('m_item');
+                      $this->load->model('m_barcode');
+                      $this->load->model('m_item_img');
+
                       $this->load->library('my_func');
+
                       $id=$this->my_func->scpro_decrypt($arr['id']);
                       
                       $usid = $this->my_func->scpro_decrypt($this->session->userdata('id'));
 
-                        
+                           
 
                       $arr2 = array(
                             "it_sku" => $arr['sku'],
                             "it_name" => $arr['name'],                            
-                            "ct_category" => $arr['category'],
+                            "ty_id" => $arr['type'],
                             "su_category" => $arr['subcategory'],
                             "it_danger" => $arr['danger'],
-                            "it_color" => $arr['color'],
-                            "it_qty" => $arr['qty'],                    
-                            "it_price" => $arr['price'],
-                            "it_descrp" => $arr['desc']
+                            "it_color" => $arr['color'],                   
+                            "un_id" => $arr['unit'],
+                            "cu_id" => $arr['curr'],
+                            "it_price" => $arr['price']
                         );
-                         
 
-                          if($this->_checkPriceChange($id,$arr2))
-                         {
-                              $this->m_item->updatePrice($arr2 , $usid , $id);
-                         }
+                        if ($this->_checkBarcode($id,$arr['sku'])) 
+                        {
+                            $result1 = $this->m_item_img->get($id);
+                            if (!$result1) 
+                            {
+                                $arr4 = array(
+                                    'item_id' => $id,
+                                    'ii_url' => $this->do_upload('fileImg','./prod_img')
+                                );
+                                $this->m_item_img->insert($arr4);
+                            }
 
-                         $result = $this->m_item->update($arr2 , $id);
-                      
-                    if($result){
-                    $this->session->set_flashdata('success', 'Item details are updated');
-                    redirect(site_url('Inventory/page/i2'),'refresh');
+                            $result = $this->m_item->update($arr2 , $id);
+                        }                   
+                          $this->session->set_flashdata('success', 'Item details are updated');
+                          redirect(site_url('Inventory/page/i2'),'refresh');
+
                     }
                     else
                     {
-                        $this->session->set_flashdata('error', 'Item details are not updated');
-                    redirect(site_url('Inventory/page/i2'),'refresh');
-                    }
-               
-                    
+                          $this->session->set_flashdata('error', 'Item details are not updated');
+                          redirect(site_url('Inventory/page/i2'),'refresh');
                     }
                    
+            }
+
+            private function _checkBarcode($id = null,$sku = null)
+            {
+                    $this->load->database();
+                    $this->load->model('m_item');
+                    $this->load->model('m_barcode');
+
+                    $data=$this->m_item->get($id);
+                    $bar=$this->m_barcode->get($id);
+                    
+                    
+                    if ($bar)
+                    {
+                      if($sku != $data->it_sku)
+                        {
+                          unlink('./barcode/'.$bar->ba_url);
+                          
+                          $arr3 = array(
+                                    'ba_url' => $this->set_barcode($sku)
+                                );
+                          $this->m_barcode->update($arr3,$id); 
+
+                          return true;
+                        }
+                      }  
+                      else 
+                      {
+                          $arr3 = array(
+                            'item_id' => $id,
+                            'ba_url' => $this->set_barcode($sku)
+                          );
+                          
+                          $this->m_barcode->insert($arr3);
+
+                      return true;  
+                      }
+                    return true;
+                    
+            }
+
+            private function _checkShelf($shelf = null)
+            {
+                    $this->load->database();
+                    $this->load->model('m_shelf');
+
+                    $arr = array('sh_code' => $shelf);
+                    $data=$this->m_shelf->get($arr);
+                    
+                    if(empty($data))
+                    {
+                        $sh_id = $this->m_shelf->insert($arr);
+                        return $sh_id;  
+                    }
+                    else
+                    {
+                        return $data->sh_id;  
+                        
+                    }
             }
 
             public function updateCat()
@@ -677,7 +993,7 @@ class Inventory extends CI_Controller {
                       $arr2 = array(
                             "ct_sku" => $arr['sku'],
                             "ct_name" => $arr['name'],                            
-                            "ct_place" => $arr['place'],
+                            "ty_id" => $arr['type'],
                             "ct_descrp" => $arr['descrp']
                             
                         );
@@ -759,8 +1075,6 @@ class Inventory extends CI_Controller {
                     $item_id = $this->my_func->scpro_decrypt($item_id);
                     $id = $this->my_func->scpro_decrypt($this->session->userdata('id'));
 
-                    //$result = $this->m_user->update($arr2 , $id);
-
 
 
                     $result=$this->m_item->updateQty1($qty , $item_id, $id, $st , $status , $dept);
@@ -779,7 +1093,32 @@ class Inventory extends CI_Controller {
 
             }
 
-        
+              public function getAjaxCat()
+              {
+                 
+                  if ($this->input->post('ty_id')) 
+                  {
+                  $ty_id = $this->input->post('ty_id');
+                  
+                   $this->load->database();
+
+                  $this->load->model('m_category');
+                  if ($ty_id == -1) 
+                  {
+                      $type['type'] = $ty_id;
+                  } else 
+                  {
+
+                      $type['cat'] = $this->m_category->getList1($ty_id);
+                      
+
+                      $type['type'] = $ty_id;
+               
+                  }         
+                  
+                  $this->load->view($this->parent_page."/ajax/getAjaxCat",$type );
+                }
+              }
 
              public function getAjaxSub()
               {
@@ -879,27 +1218,55 @@ class Inventory extends CI_Controller {
               public function getAjaxSearch3()
               {
                  
-                  if ($this->input->post('ct_id')) {
-                  $ct_id = $this->input->post('ct_id');
+                  if ($this->input->post('ct_id')) 
+                  {
+                      $this->load->view($this->parent_page."/ajax/getAjaxSearch3",$type );
+                  }
+              }
 
-
-                  
-                   $this->load->database();
-
-                  $this->load->model('m_subcat');
-                  if ($ct_id == -1) {
-                      $type['cat'] = $ct_id;
-                  } else {
-
-                      $type['type'] = $this->m_subcat->getList($ct_id);
-                      
-                  
-                      $type['cat'] = $ct_id;
-                    
-                  }         
-                  
-                  $this->load->view($this->parent_page."/ajax/getAjaxSearch3",$type );
+              public function getAjaxSupplier()
+              {
+                $this->load->database();
+                $this->load->model('m_supplier');
+                
+                $receive = $this->input->post('receive2');
+                $arr['supp'] = $this->m_supplier->get();
+                
+                if ($receive == -1) 
+                {
+                      $this->load->view($this->parent_page."/ajax/getAjaxSupplier",$arr);  
                 }
+                else {
+                  return false;
+                }
+               
+              }
+              public function getAjaxSupplier2()
+              {
+                $this->load->database();
+                $this->load->model('m_supplier');
+                $this->load->library('my_func');
+                
+                $supp = $this->input->post('supplier');
+                $arr['arr'] = $this->m_supplier->get($supp);
+                
+                $this->load->view($this->parent_page."/ajax/getAjaxSupplier2",$arr);  
+               
+              }
+              public function getAjaxItem()
+              {
+                $this->load->database();
+                $this->load->model('m_item');
+                $this->load->library('my_func');
+                
+                $temp['num'] = $this->input->post('num');
+
+                $arr2 = array('it.it_sku' => $this->input->post('search') );
+                $temp['arr'] = $this->m_item->getAll($arr2);
+                
+
+                $this->load->view($this->parent_page."/ajax/getAjaxItem",$temp);  
+
               }
                public function getAjaxTable()
               {
@@ -1190,6 +1557,120 @@ class Inventory extends CI_Controller {
                           redirect(site_url('Inventory/page/i2'),'refresh');
                           }           
                 }
+                public function do_upload($img = null,$file_url = null)
+                {
+                    
+                        $config = array(
+                                    'upload_path' => $file_url,
+                                    'allowed_types' => "gif|jpg|png|jpeg",
+                                    'overwrite' => TRUE,
+                                    'max_size' => "4000", // Can be set to particular file size , here it is 4 MB(4000 Kb)
+                                    'max_height' => "4000",
+                                    'max_width' => "4000",
+                                    'encrypt_name' => true
+                                    );
+
+                        $this->load->library('Upload', $config);
+                        
+                        
+                        $this->upload->initialize($config);
+                        $result = $this->upload->do_upload($img);
+                        if (!$result) {
+                          $error = $this->upload->display_errors();
+                          $this->session->set_flashdata('warning',$error);
+                          
+                          return false;
+                        }
+                        else {
+                          $data = $this->upload->data();
+                          $background=$data['raw_name'].$data['file_ext'];
+
+                          return $background;
+                        }
+                }
+                public function gen_barcode()
+                {
+                  $this->load->database();
+                  
+                  $this->load->model('m_item');
+                  $this->load->model('m_barcode');
+                  
+
+                  $this->load->library('my_func');
+                  
+                  if (($this->input->get('num')||$this->input->post('num')) && ($this->input->get('id')||$this->input->post('id'))) 
+                  {
+                      if ($this->input->post('num') && $this->input->post('id')) 
+                      {
+                        $arr['num'] = $this->input->post('num');
+                        
+                        $id= $this->my_func->scpro_decrypt($this->input->post('id'));
+                      }
+                      else if($this->input->get('num') && $this->input->get('id'))
+                      {
+                        $arr['num'] = $this->input->get('num');
+                        $id= $this->my_func->scpro_decrypt($this->input->get('id'));  
+                      }
+
+                      $result=$this->m_barcode->get($id);
+                      $arr['arr']=$this->m_item->getAll($id);
+
+                      if(!empty($result))
+                      {
+                        $this->load->view($this->parent_page."/A4/barcode",$arr);   
+                      }
+                      else {
+                        $this->session->set_flashdata('error', 'There is something wrong with the item detail, please contact it@nastyjuice.com.my for information');
+                          redirect(site_url('Inventory/page/i2'),'refresh');
+                      }
+                      
+                  }
+                }
+
+                public function del_pic()
+                {
+                  if ($this->input->post('item')) 
+                  {
+                      $this->load->library('my_func');
+                      
+                      $this->load->database();
+                  
+                      $this->load->model('m_item_img');
+
+                      $path_file='/prod_img';
+                 
+                      $id = $this->my_func->scpro_decrypt($this->input->post('item')); 
+                      $file = $this->input->post('file'); 
+
+                      $this->m_item_img->delete($id);
+
+                      unlink('./prod_img/'.$file);
+                         
+                      redirect(site_url('Inventory/page/i1.1'),'refresh');
+                      
+                  }
+                }
+                public function set_barcode($id  = null)
+                {
+                      //load library
+                      $this->load->library('zend');
+                      //load in folder Zend
+                      $this->zend->load('Zend/Barcode');
+                      //generate barcode
+                      $file = Zend_Barcode::draw('code128', 'image', array('text'=>$id), array());
+                      $id = time().$id;
+                      $store_image = imagepng($file,"barcode/{$id}.png");
+                      return $id.'.png';
+
+                      
+                }
+
+                private function _loadCrud()
+                {
+                  $this->load->database();
+                  $this->load->library('grocery_CRUD');
+                }
+
 
                 private function _checkPriceChange($id = null, $arr1 = null)
                 {
@@ -1207,6 +1688,7 @@ class Inventory extends CI_Controller {
                          return false;
                     }
                 }
+
 
 
                 public function logout()
@@ -1235,6 +1717,8 @@ class Inventory extends CI_Controller {
                     
                   
                 }
+
+                
 
 
 

@@ -110,23 +110,22 @@ class M_subcat extends CI_Model {
         public function getAll($where = null , $all = false, $del = 0)
         {
             $this->db->select('*');
-            $this->db->from(self::TABLE_NAME);
+            $this->db->from('invento_subcategories su');
             if ($where !== NULL) {
                 if (is_array($where)) {
                     foreach ($where as $field=>$value) {
-                        $this->db->where($field, $value);
+                        $this->db->where('su.su_id', $value);
                     }
                 } else {
-                    $this->db->where(self::PRI_INDEX, $where);
+                    $this->db->where('su.su_id', $where);
                 }
             }
             if($del != 1){              
-                $this->db->where('su_del', $del);
+                $this->db->where('su.su_del', $del);
             } 
-            // if (!$all) {
-            //     $this->db->where('cat_id >', 0);
-            // }           
-         $this->db->join('invento_categories', 'cat_id = ct_id', 'left');
+                     
+            $this->db->join('invento_categories ca', 'su.cat_id = ca.ct_id', 'left');
+            $this->db->join('type ty', 'ca.ty_id = ty.ty_id', 'left');
             $result = $this->db->get()->result();
             if ($result) {
                 if ($where !== NULL) {

@@ -37,9 +37,9 @@ body :-ms-input-placeholder {
   font-weight: 300;
 }
 .wrapper {
-  background: #a35095;
-  background: -webkit-linear-gradient(top left, #50a3a2 0%, #e353c4 100%);
-  background: linear-gradient(to bottom right, #691737 0%, #e48ec3 100%);
+  background: #57DACD;
+  background: -webkit-linear-gradient(top left, #4FC496 0%, #0DD989 100%);
+  background: linear-gradient(to bottom right, #4FC496 0%, #27ABC1 100%);
   position: absolute;
   /*top: 5%;*/
   left: 0;
@@ -93,7 +93,9 @@ form input {
           appearance: none;
   outline: 0;
   border: 1px solid rgba(255, 255, 255, 0.4);
-  background-color: rgba(255, 255, 255, 0.2);
+  /* background-color: rgba(255, 255, 255, 0.2); */
+  background-color: white;
+  
   width: 250px;
   border-radius: 3px;
   padding: 10px 15px;
@@ -112,7 +114,36 @@ form input:hover {
 form input:focus {
   background-color: white;
   width: 300px;
-  color: #e353d0;
+  color: #53e3a6;
+}
+form select {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  outline: 0;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  /* background-color: rgba(255, 255, 255, 0.2); */
+  background-color: white;
+  
+  width: 250px;
+  border-radius: 3px;
+  padding: 10px 15px;
+  margin: 0 auto 10px auto;
+  display: block;
+  text-align: center;
+  font-size: 18px;
+  color: #53e3a6;
+  -webkit-transition-duration: 0.25s;
+          transition-duration: 0.25s;
+  font-weight: 300;
+}
+form select:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+form select:focus {
+  background-color: white;
+  /* width: 300px; */
+  color: #53e3a6;
 }
 form button {
   -webkit-appearance: none;
@@ -141,7 +172,7 @@ form button:hover {
   background-color: white;
   border: 0;
   padding: 10px 15px;
-  color: #6d84b4;
+  color: #22AA9C;
   border-radius: 3px;
   width: 180px;
   cursor: pointer;
@@ -242,6 +273,7 @@ form button:hover {
   -webkit-animation-delay: 11s;
           animation-delay: 11s;
 }
+
 @-webkit-keyframes square {
   0% {
     -webkit-transform: translateY(0);
