@@ -1,25 +1,4 @@
 
-<script src="<?= base_url(); ?>js/jquery.js"></script>
-
-<script>
-
-$(document).ready(function() {
-
-    $('#category').change(function() {
-
-            temp = $(this).val();
-           
-            $.post('<?= site_url('Inventory/getAjaxSub'); ?>', {ct_id : temp}, function(data) {
-               
-                $("#divSub").html(data);
-            });
-        });
-
-
-     
-
-    });
-</script>
 <body>
 
 	<div id="wrapper">
@@ -32,7 +11,7 @@ $(document).ready(function() {
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                             Stock-Out
+                             Check-Out Item
                           
                         </h1>
                         <ol class="breadcrumb">
@@ -40,7 +19,7 @@ $(document).ready(function() {
                                 <i class="fa fa-dashboard"></i>  <a href="<?= site_url('Inventory/page/a1'); ?>">Dashboard</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-caret-square-o-down"></i> Stock-Out
+                                <i class="fa fa-caret-square-o-down"></i> Check-Out Item
                             </li>
                         </ol>
                     </div>
@@ -52,14 +31,13 @@ $(document).ready(function() {
                     <div class="col-lg-12">
                     <!-- /.col-lg-12 -->
                   
-                       <form role="form" method="post" action="<?= site_url('Inventory/stock-in'); ?>">
 
 
 
 
                                         <div class="row">
                                             <div class=" col-md-4">
-                                                <h3 class="page-header">Stock-Out Form</h3>
+                                                <h3 class="page-header">Check-Out Item Form</h3>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -70,24 +48,17 @@ $(document).ready(function() {
                                                                     <!-- <div class="col-md-8"> -->
                                                                     
                                                                             <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                                                            <input class="form-control input-lg" name="barcode" id="barcode" placeholder="Product Barcode or Request code">
+                                                                            <input class="form-control input-lg" name="search" id="search" placeholder="Item Barcode or Request Code" autofocus>
                                                         
                                                                         
                                                                     <!-- </div> -->           
                                                                 </div>
                                                         </div>
-                                                        <div class="col-md-4"> 
-                                                        
-                                                                <div class="form-group">
-                                                                    
-                                                                            <input class="form-control input-lg" name="shelf" id="shelf" placeholder="Shelf">
-                                                        
-                                                                
-                                                                </div>
-                                                        </div>
-                                                    </div>
+                                                       
+                                                </div>
                                         </div>
-                                         
+                       <form role="form" method="post" action="<?= site_url('Inventory/stock_out'); ?>">
+                                          
                                          <div class="row">
                                                 <div class="form-group">
                                                     <div class="col-md-4">
@@ -104,12 +75,11 @@ $(document).ready(function() {
                                                             <div class="form-group">
                                                         
                                                         
-                                                                 <select class="form-control input-lg">
-                                                                     <option>Send To</option>                                                                 
-                                                                     <option>Inventory</option>
-                                                                     <option>Production</option>
-                                                                     <option>Marketing</option>
-                                                                     <option>Distribution</option>
+                                                                 <select class="form-control input-lg" name="dept" id="dept" required>
+                                                                     <option value="">Send To</option>                                                                 
+                                                                     <?php foreach ($supp as $key) { ?>
+                                                                        <option value="<?= $key->dp_id; ?>" > <?= $key->dp_dept; ?> </option>
+                                                                    <?php } ?>  
                                                                  </select> 
                                             
                                                             </div>
@@ -119,7 +89,7 @@ $(document).ready(function() {
                                                         
                                                                 <div class="form-group">
                                                                     
-                                                                            <input class="form-control input-lg" name="date" id="date" value="<?= date("Y-m-d"); ?>">
+                                                                            <input class="form-control input-lg" name="date" id="date" value="<?= date("Y-m-d"); ?>" disabled>
                                                         
                                                                 
                                                                 </div>
@@ -143,37 +113,15 @@ $(document).ready(function() {
                                                                             <table class="table table-striped table-bordered table-hover" id="dataTables-example"  width="100%">
                                                                                 <thead>
                                                                                     <tr>
-                                                                                        <th>#</th>
-                                                                                        <th>Item Detail</th>
-                                                                                        <th>Current Stock</th>
-                                                                                        <th>Qty Stock-Out</th>   
-                                                                                        <th>Balance</th>   
+                                                                                        
+                                                                                        <th class="col-md-6">Item Detail</th>
+                                                                                        <th>Stock Quantity</th>   
+                                                                                        <th class="col-md-2">Quantity Check-Out</th>   
                                                                                         <th>Action</th>
                                                                                     </tr>
                                                                                 </thead>
-                                                                                <tbody>
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                        1
-                                                                                        </td>
-                                                                                        <td>
-                                                                                        <span>Wicked Haze TPD Outer box</span> - <small><b>Raw Material</b></small><br>
-                                                                                        Color Box - Multipack
-                                                                                        </td>
-                                                                                        <td>10000</td>
-                                                                                        <td>
-                                                                                        <div class="form-group row">
-                                                                                            <div class="col-xs-5">
-                                                                                                <input class="form-control" name="qty" id="qty" type="number"> 
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                        <span style="color:green">11000</span>
-                                                                                        </td>
-                                                                                        <td><button type="button" class="delBtn btn btn-danger btn-circle btn-xs" title="Delete" id="" name=""><i class="fa fa-close"></i></button>
-                                                                                        <input type="hidden" class="form-control" name="item_id" id="item_id" value=""></td>
-                                                                                    </tr>
+                                                                                <tbody id="ItemList">
+                                                                                   
                                                                                 </tbody>
                                                                             </table>
                                                                     </div>
@@ -232,20 +180,33 @@ $(document).ready(function() {
         </div>
         <!-- /#page-wrapper -->
 	</div>
+
 <script>
 
-  $(function () {
-      var demo1 = $('#holiday_color');
+$(document).ready(function () {
 
-       demo1.colorpickerplus();
-       demo1.on('changeColor', function(e,color){
-          
-            if(color==null){
-              $(this).val('transparent').css('background-color', '#b59972');//tranparent
-              }else{
-            $(this).val(color).css('background-color', color);
-          }
-      });
-  
-   });
+    num = 1;
+
+    $('#search').scannerDetection({
+	timeBeforeScanTest: 200, // wait for the next character for upto 200ms
+	avgTimeByChar: 100, // it's not a barcode if a character takes longer than 100ms
+	onComplete: function(barcode){
+
+     $.post('<?= site_url('Inventory/getAjaxItem2'); ?>', {search : barcode, num : num}, function(data) {
+
+                $("#ItemList").append(data);
+                $('#search').val("");  
+
+            });
+    num ++;	 	
+    } 
+    });
+
+    $(document).keypress(function(e){
+          var keycode = (e.keyCode ? e.keyCode : e.which);
+            if (keycode == '13') {
+                $("#search").focus();
+            }  
+    });
+});
 </script>

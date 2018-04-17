@@ -111,7 +111,7 @@
                                                                         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-database" aria-hidden="true"></i> Item Log
                                                                         <span class="caret"></span></button>
                                                                         <ul class="dropdown-menu">
-                                                                            <li><a href="<?= site_url('Inventory/page/il1'); ?>">Stock-In</a></li>
+                                                                            <li><a href="<?= site_url('Inventory/page/il1?item=').$this->my_func->scpro_encrypt($arr->it_id).'&st=1';; ?>">Stock-In</a></li>
                                                                             <li><a href="<?= site_url('Inventory/page/il1?item=').$this->my_func->scpro_encrypt($arr->it_id).'&st=2'; ?>">Stock-Out</a></li>
                                                                             <li><a href="#">Price Change</a></li>
                                                                         </ul>

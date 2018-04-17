@@ -1,8 +1,4 @@
 
-<script src="<?= base_url(); ?>js/jquery.js"></script>
-
-
-<body>
 
 	<div id="wrapper">
 
@@ -22,6 +18,9 @@
                                 <i class="fa fa-dashboard"></i>  <a href="<?= site_url('Inventory/page/a1'); ?>">Dashboard</a>
                             </li>
                             <li class="active">
+                                <i class="fa fa-list"></i>  <a href="<?= site_url('Production/page/p1'); ?>">Request List</a>
+                            </li>
+                            <li class="active">
                                 <i class="fa fa-plus-square"></i> Request Form
                             </li>
                         </ol>
@@ -34,7 +33,7 @@
                     <div class="col-lg-12">
                     <!-- /.col-lg-12 -->
                   
-                       <form role="form" method="post" action="<?= site_url('Inventory/addItem'); ?>">
+                       <form role="form" method="post" action="<?= site_url('Inventory/request'); ?>">
 
 
 
@@ -62,7 +61,7 @@
                                                         <label class="col-md-2" >Date :</label> 
                                                         <div class=" col-md-3">  
                                             
-                                                                <input class="form-control input-sm" type="text" id="date" name="date" value="<?= date("Y-m-d"); ?>">
+                                                                <input class="form-control input-sm" type="text" id="date" name="date" value="<?= date("Y-m-d"); ?>" disabled>
 
                                                         </div>
                                                     </div>
@@ -74,7 +73,7 @@
                                                     <div class="form-group">
                                                         <label class="col-md-2" >Planning :</label> 
                                                         <div class=" col-md-3">  
-                                                            <select class="form-control"  id="shift" name="shift" required>
+                                                            <select class="form-control"  id="plan" name="plan" required>
                                                                     <option value="">--Select Planning--</option>
                                                                     <option value="1">Night</option>
                                                                     <option value="2">Morning</option>
@@ -85,7 +84,7 @@
                                                         <label class="col-md-2" >Time :</label> 
                                                         <div class=" col-md-3">  
                                                                 
-                                                                <input class="form-control input-sm" type="time" id="time" name="time" value="">
+                                                                <div id="txt"></div>
 
                                                         </div>
                                                     </div>
@@ -103,11 +102,11 @@
                                                     <div class="form-group">
                                                             <label class="col-md-2" >S.Zone / Department :</label> 
                                                             <div class=" col-md-3">  
-                                                                    <select class="form-control" name="category" id="category">
+                                                                    <select class="form-control" name="dept" id="dept">
                                                                     <option value="" >Select S.Zone/Department</option>
-                                                                    <option value="1" >Production</option>
-                                                                    <option value="2" >Distribution</option>
-                                                                    <option value="3" >Marketing</option>
+                                                                    <?php foreach ($supp as $key) { ?>
+                                                                        <option value="<?= $key->dp_id; ?>" > <?= $key->dp_dept; ?> </option>
+                                                                    <?php } ?>  
                                                                  
                                                                 
                                                                     </select>
@@ -133,45 +132,24 @@
                                                                                             <thead>
                                                                                                 <tr>
                                                                                                     <th>#</th>
-                                                                                                    <th>Item Detail</th>
-                                                                                                    <th>Current Stock</th>
-                                                                                                    <th>Qty Issued</th>   
-                                                                                                    <th>Balance</th>   
+                                                                                                    <th class="col-md-6">Item Detail</th>
+                                                                                                    <th class="col-md-2">Current Stock</th>
+                                                                                                    <th>Qty Issued</th>    
                                                                                                     <th>Action</th>
                                                                                                 </tr>
                                                                                             </thead>
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td>
-                                                                                                    1
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                    <span>Wicked Haze TPD Outer box</span> - <small><b>Raw Material</b></small><br>
-                                                                                                    Color Box - Multipack
-                                                                                                    </td>
-                                                                                                    <td>10000</td>
-                                                                                                    <td>
-                                                                                                    <div class="form-group row">
-                                                                                                        <div class="col-xs-5">
-                                                                                                            <input class="form-control" name="qty" id="qty" type="number"> 
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                    <span style="color:green">11000</span>
-                                                                                                    </td>
-                                                                                                    <td><button type="button" class="delBtn btn btn-danger btn-circle btn-xs" title="Delete" id="" name=""><i class="fa fa-close"></i></button>
-                                                                                                    <input type="hidden" class="form-control" name="item_id" id="item_id" value=""></td>
-                                                                                                </tr>
-                                                                                                <tr>
-                                                                                                <td colspan="6" align="center">
-                                                                                                    <a href="">
-                                                                                                        <i class="fa fa-fw fa-plus"></i> Add Item
-                                                                                                    </a>
-                                                                                                
-                                                                                                </td>
-                                                                                                </tr>
+                                                                                            <tbody id="ItemList">
                                                                                             </tbody>
+                                                                                                <tfoot>
+                                                                                                    <tr>
+                                                                                                        <td colspan="6" align="center">
+                                                                                                            <button type="button" class="addBtn btn btn-default btn-circle btn-md" title="Add Item" id="addBtn" name="addBtn"><i class="fa fa-fw fa-plus"></i> Add Item</button>   
+
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </tfoot>
+                                                                                               
+                                                                                            
                                                                                         </table>
                                                                                 </div>
                                                                         </div>
@@ -201,9 +179,11 @@
                         
                                         <div class="clear" style="height: 50px;"></div>
                                          <div class="row">
-                                            <div class=" col-md-5">
+                                            <div class=" col-md-6">
                                                 <button type="submit" class="btn btn-success">Create</button>
                                                 <button type="reset" class="btn btn-danger">Reset</button>
+                                                <a href="<?= site_url('Production/page/p1'); ?>">
+                                                <button type="button" class="btn btn-warning">Back</button>
                                             </div> 
                                         </div>  
                                         <div class="clear" style="height: 50px;"></div>                
@@ -226,19 +206,33 @@
         <!-- /#page-wrapper -->
 	</div>
 <script>
+function startTime() 
+        {
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('txt').innerHTML = h + ":" + m + ":" + s;
 
-  $(function () {
-      var demo1 = $('#holiday_color');
-
-       demo1.colorpickerplus();
-       demo1.on('changeColor', function(e,color){
-          
-            if(color==null){
-              $(this).val('transparent').css('background-color', '#b59972');//tranparent
-              }else{
-            $(this).val(color).css('background-color', color);
-          }
-      });
-  
-   });
+            var t = setTimeout(startTime, 500);
+        }
+        function checkTime(i) 
+        {
+            if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+            return i;
+        }
+$(document).ready(function () {
+        num = 1;
+        
+        $('#addBtn').click(function() {
+                
+                    $.post('<?= site_url('Inventory/getAjaxItem3'); ?>', {num : num}, function(data) {
+                        
+                        $("#ItemList").append(data);
+                    });
+         num ++;
+                });
+});
 </script>

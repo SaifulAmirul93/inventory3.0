@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                             Stock-In
+                             Check-In Item
                           
                         </h1>
                         <ol class="breadcrumb">
@@ -20,7 +20,7 @@
                                 <i class="fa fa-dashboard"></i>  <a href="<?= site_url('Inventory/page/a1'); ?>">Dashboard</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-caret-square-o-down"></i> Stock-In
+                                <i class="fa fa-caret-square-o-down"></i> Check-In Item
                             </li>
                         </ol>
                     </div>
@@ -39,7 +39,7 @@
 
                                         <div class="row">
                                             <div class=" col-md-4">
-                                                <h3 class="page-header">Stock-In Form</h3>
+                                                <h3 class="page-header">Check-In Item Form</h3>
                                             </div>
                                         </div>
                                         <form role="form" method="post" action="<?= site_url('Inventory/stock_in'); ?>">
@@ -71,12 +71,10 @@
                                                         
                                                         
                                                                  <select class="form-control input-lg" name="status" id="status" required>
-                                                                    <option value="">Received From</option>
-                                                                    <option value="-1">Supplier</option>                                                                                                                                     
-                                                                    <option value="1">Inventory</option>
-                                                                    <option value="2">Production</option>
-                                                                    <option value="3">Marketing</option>
-                                                                    <option value="4">Distribution</option>
+                                                                    <option value="">Check-In Status</option>
+                                                                    <option value="1">New Item</option>
+                                                                    <option value="2">Return Item</option>
+                                                                    
                                                                  </select> 
                                             
                                                             </div>
@@ -116,11 +114,8 @@
                                                                                         
                                                                                         <th class="col-md-4">Item Detail</th>
                                                                                         <th class="col-md-2">Shelf No.</th>
-                                                                                        <th class="col-md-2">Current Stock</th>
-                                                                                        <th >Qty Take-In</th>   
-                                                                                    
-                                                                                        <th >Purchase Price</th>   
-                                                                                        
+                                                                                        <th class="col-md-2">Stock Quantity</th>
+                                                                                        <th class="col-md-2">Purchase Price</th>   
                                                                                         <th>Action</th>
                                                                                     </tr>
                                                                                 </thead>
@@ -181,8 +176,8 @@ $(document).ready(function () {
 
             });
     num ++;	 	
-    } // main callback function	
-        // resetSearch();
+    } 
+
     });
     $(document).keypress(function(e){
           var keycode = (e.keyCode ? e.keyCode : e.which);

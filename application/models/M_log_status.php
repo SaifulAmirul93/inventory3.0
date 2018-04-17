@@ -1,16 +1,16 @@
 <?php 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class M_log2 extends CI_Model {
+class M_log_status extends CI_Model {
 
     /**
      * @name string TABLE_NAME Holds the name of the table in use by this model
      */
-    const TABLE_NAME = 'logs';
+    const TABLE_NAME = 'log_status';
     /**
      * @name string PRI_INDEX Holds the name of the tables' primary index used in this model
      */
-    const PRI_INDEX = 'lo_id';
+    const PRI_INDEX = 'ls_id';
     /**
      * Retrieves record(s) from the database
      *
@@ -140,51 +140,10 @@ class M_log2 extends CI_Model {
 
     public function count($filter = NULL, $like = null, $where = null,$st = null)
     {
-        $this->db->from('logs lo');
+        $this->db->from(self::TABLE_NAME);
         
-        $this->db->join('invento_items it', 'it.it_id = lo.it_id', 'left');
-
-        $this->db->join('unit un', 'un.un_id = it.un_id', 'left');  
-        
-        $this->db->join('status sta', 'sta.sta_id = lo.sta_id', 'left');
-
-
-        if ($st == 1) 
-        {
-            $this->db->join('log_received lrec', 'lrec.lo_id = lo.lo_id', 'left');   
-            
-            $this->db->join('received rec', 'rec.rec_id = lrec.rec_id', 'left');   
-
-            $this->db->join('item_status is', 'is.is_id = rec.is_id', 'left');
-            
-            $this->db->join('received_supplier rs', 'rs.rec_id = rec.rec_id', 'left');
-
-            $this->db->join('received_department rd', 'rd.rec_id = rec.rec_id', 'left');  
-
-            $this->db->join('supplier sup', 'sup.sup_id = rs.sup_id', 'left'); 
-        
-            $this->db->join('department dp', 'dp.dp_id = rd.dp_id', 'left');
-               
-        }
-        elseif ($st == 2) 
-        {
-            $this->db->join('log_released lrel', 'lrel.lo_id = lo.lo_id', 'left');   
-            
-            $this->db->join('released rel', 'rel.rel_id = lrel.rel_id', 'left');
-            
-            $this->db->join('released_department rd', 'rd.rel_id = rel.rel_id', 'left');   
-
-            $this->db->join('department dp', 'dp.dp_id = rd.dp_id', 'left');
-            
-        }
-
-        $this->db->join('invento_users us', 'us.id = lo.us_id', 'left');
-        
-        $this->db->where("lo.it_id", $where);
-
-        $this->db->where("lo.sta_id", $st);
-        
-        $this->db->order_by('lo.lo_date', 'desc'); 
+        $this->db->where("it_id", $where);
+        $this->db->where("sta_id", $st);
         
         if($filter != NULL || $like != NULL)
         {
@@ -210,60 +169,50 @@ class M_log2 extends CI_Model {
 
     public function get_curr( $limit = 2, $start = 0, $filter = array(), $like = NULL ,$where = NULL,$st = NULL)
     {
-        $this->db->from('logs lo');
+        $this->db->select('*');
+        $this->db->from('logs lo');  
+
+        $this->db->where("lo.it_id", $where);
+
+        $this->db->where("lo.sta_id", $st);
         
         $this->db->join('invento_items it', 'it.it_id = lo.it_id', 'left');
 
         $this->db->join('unit un', 'un.un_id = it.un_id', 'left');  
-        
-        $this->db->join('status sta', 'sta.sta_id = lo.sta_id', 'left');
-
 
         if ($st == 1) 
         {
-            $this->db->join('log_received lrec', 'lrec.lo_id = lo.lo_id', 'left');   
-            
-            $this->db->join('received rec', 'rec.rec_id = lrec.rec_id', 'left'); 
+            $this->db->join('received rec', 'rec.rec_id = lo.rec_id', 'left');   
 
-            $this->db->join('item_status is', 'is.is_id = rec.is_id', 'left');
-            
-            $this->db->join('received_supplier rs', 'rs.rec_id = rec.rec_id', 'left');
-
-            $this->db->join('received_department rd', 'rd.rec_id = rec.rec_id', 'left');  
+            $this->db->join('received_supplier rs', 'rs.rec_id = rec.rec_id', 'left');  
 
             $this->db->join('supplier sup', 'sup.sup_id = rs.sup_id', 'left'); 
         
-            $this->db->join('department dp', 'dp.dp_id = rd.dp_id', 'left');
+            $this->db->join('department dp', 'dp.dp_id = rec.dp_id', 'left');
                
         }
         elseif ($st == 2) 
         {
-            $this->db->join('log_released lrel', 'lrel.lo_id = lo.lo_id', 'left');   
-            
-            $this->db->join('released rel', 'rel.rel_id = lrel.rel_id', 'left');
+            $this->db->join('released rel', 'rel.rel_id = lo.rec_id', 'left');   
 
-            $this->db->join('item_status is', 'is.is_id = rel.is_id', 'left');            
-            
-            $this->db->join('released_department rd', 'rd.rel_id = rel.rel_id', 'left');   
-
-            $this->db->join('department dp', 'dp.dp_id = rd.dp_id', 'left');
+            $this->db->join('department dp', 'dp.dp_id = rel.dp_id', 'left');
             
         }
+        
+
+        $this->db->join('status sta', 'sta.sta_id = lo.sta_id', 'left');
+
 
         $this->db->join('invento_users us', 'us.id = lo.us_id', 'left');
-        
-        $this->db->where("lo.it_id", $where);
+                 
 
-        $this->db->where("lo.sta_id", $st);
 
-        $this->db->order_by('lo.lo_date', 'desc'); 
-        
         $this->db->limit($limit, $start);
     	if($filter != NULL){
     		if(is_array($filter)){
              
     			foreach ($filter as $key => $value) {
-                     $this->db->where($key , $value);
+                     $this->db->or_where('bi.bi_code', $value);
                 }
     				
     			

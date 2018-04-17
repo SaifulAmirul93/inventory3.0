@@ -42,6 +42,7 @@
                                 <!-- <h4>(<?= $arr->it_sku; ?>) <?= $arr->it_name; ?> | <?= $arr->ct_name; ?> | <?= $arr->su_name; ?></h4> -->
                             <div class="clearfix" style="height:5px">    
                             </div>
+                            
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example"  width="100%">
                                     <thead>
@@ -50,7 +51,6 @@
                                             <th>Date</th>
                                             <th>Status</th>
                                             <th>PO Number</th>
-                                            <th>Supplier</th>
                                             <th>Department</th>
                                             <th>From Qty</th>
                                             <th>To Qty</th>
@@ -71,32 +71,32 @@
                                         <tr>
                                             <td><?= $key->lo_date; ?></td>
                                             <td>
-                                            <?php 
-                                            if(empty($key->dp_id))
-                                            {
-                                                echo "New Item";
-                                            }
-                                            else
-                                            {
-                                                echo "Return Item";
-                                            } ?>
+                                            <?= $key->is_desc;  ?>
                                                
                                             </td>
                                             <td><?php  if(!empty($key->po_number)){ $po=$key->po_number; } echo $po; ?></td>
-                                            <td><?php  if(!empty($key->sup_company)){ $company=$key->sup_company; } echo $company; ?></td>
                                             <td><?php  if(!empty($key->dp_dept)){ $dept=$key->dp_dept; } echo $dept; ?></td>
                                             <td><?= $key->lo_from; ?> <?= $key->un_desc; ?></td>
                                             <td><?= $key->lo_to; ?> <?= $key->un_desc; ?></td>
-                                            <td>+<?= $key->lo_diff; ?> <?= $key->un_desc; ?></td>
+                                            <td><?php 
+                                            if($key->sta_id == 1)
+                                            {
+                                                echo "+";
+                                            }
+                                            elseif ($key->sta_id == 2) 
+                                            {
+                                                 echo "-";
+                                            }  
+                                            ?><?= $key->lo_diff; ?> <?= $key->un_desc; ?></td>
                                             <td><?= $key->username; ?></td>
                                          </tr>   
                                     <?php } ?>
 
                                     </tbody>
                                     <tfoot>
-									<?php
-										$lastRow = $numPage + sizeof($result);
-									?>
+                                        <?php
+                                            $lastRow = $numPage + sizeof($result);
+                                        ?>
 										<tr>
 												<td colspan="9">
 													<ul class="pagination">
@@ -112,8 +112,8 @@
 														<span class="btn disabled">Showing <?= ($numPage+1); ?> to <?= $lastRow; ?> of <?= $total; ?> records</span>
 													</div> 
 												</td>
-											</tr>
-										</tfoot>
+										</tr>
+									</tfoot>
                                 </table>
                             </div>
                             <!-- /.table-responsive -->

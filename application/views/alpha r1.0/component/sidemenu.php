@@ -14,11 +14,14 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo3"><i class="fa fa-fw fa-th-large"></i> Inventory</a>
                         <ul id="demo3" class="collapse">
                             <li>
-                                <a href="<?= site_url('Inventory/page/so1'); ?>"><i class="fa fa-fw fa-caret-square-o-down"></i> Stock-In</a>
+                                <a href="<?= site_url('Inventory/page/so1'); ?>"><i class="fa fa-fw fa-caret-square-o-down"></i> Goods Received</a>
                                 
                             </li>
                             <li>
-                               <a href="<?= site_url('Inventory/page/so2'); ?>"><i class="fa fa-fw fa-caret-square-o-up"></i> Stock-Out</a>
+                               <a href="<?= site_url('Inventory/page/so2'); ?>"><i class="fa fa-fw fa-caret-square-o-up"></i> Goods Discharged</a>
+                            </li>
+                            <li>
+                               <a href="<?= site_url('Inventory/page/so3'); ?>"><i class="fa fa-fw fa-exchange"></i> Goods Diverted</a>
                             </li>
                         </ul>
                     </li>
@@ -29,14 +32,13 @@
                                 <a  href="<?= site_url('Production/page/a1'); ?>"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                             </li>
                             <li>
-                                <a href="<?= site_url('Inventory/page/p2'); ?>"><i class="fa fa-fw fa-list-alt"></i> Request Material</a>
+                                <a href="<?= site_url('Production/page/p1'); ?>"><i class="fa fa-fw fa-list-alt"></i> Request Material</a>
                             </li>
                         </ul>
                     </li>
                     
                     <li <?php if ($link == 'w1') { echo "class='active'";}?>>
-
-                        <a href="<?= site_url('Inventory/page/i2'); ?>"><i class="fa fa-fw fa-cubes"></i> Warehouse</a>
+                        <a href="<?= site_url('Inventory/page/w1'); ?>"><i class="fa fa-fw fa-cubes"></i> Warehouse</a>
                     </li>
                     
                     <li <?php if ($link == 'lo1') { echo "class='active'";}?>>
