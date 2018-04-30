@@ -15,7 +15,7 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="<?= site_url('Inventory/page/a1'); ?>">Dashboard</a>
+                                <i class="fa fa-dashboard"></i>  <a href="<?= site_url('Production/page/a1'); ?>">Dashboard</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-list"></i>  <a href="<?= site_url('Production/page/p1'); ?>">Request List</a>
@@ -33,7 +33,7 @@
                     <div class="col-lg-12">
                     <!-- /.col-lg-12 -->
                   
-                       <form role="form" method="post" action="<?= site_url('Inventory/request'); ?>">
+                       <form role="form" method="post" action="<?= site_url('Production/request'); ?>">
 
 
 
@@ -122,7 +122,7 @@
                                                         <div class="col-lg-12">
                                                             <div class="panel panel-primary">
                                                                 <div class="panel-heading">
-                                                                    <h3 class="panel-title"><i class="fa fa-list fa-fw"></i>Product List</h3>
+                                                                    <h3 class="panel-title"><i class="fa fa-list fa-fw"></i>Item List</h3>
                                                                 </div>
                                                                 <div class="panel-body">
                                                                     <div class="row">

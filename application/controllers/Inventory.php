@@ -492,6 +492,59 @@ class Inventory extends CI_Controller {
                         $this->_show('display', $data, 'so2');
                   break;
 
+                  case 'so4':
+                        $this->load->database();
+                        $this->load->model('m_request');
+                        $this->load->library('my_func');
+                                
+                        $this->load->library('pagination');
+                                
+
+                        $item = $this->input->get('item');
+                        $st= $this->input->get('st');
+
+                        $like = null;
+                        $filter = null;
+                        $limit_per_page = 10;
+
+                        $arr['total'] = $this->m_request->count($filter,$like,$item);   
+
+                        $page = $this->uri->segment(4,1);
+
+                        $page--;
+
+                        $arr['numPage'] = $page*10;
+                        $arr['result'] = $this->m_request->get_curr($limit_per_page , $arr['numPage'] , $filter , $like , $item , $st);
+                        $config['base_url'] = site_url('Inventory/page/so4');
+                        $config['total_rows'] = $arr['total'];
+                        $config['per_page'] = $limit_per_page;
+                        $config["uri_segment"] =4;
+                                
+                        // custom paging configuration
+                        $config['num_links'] = 3;
+                        $config['use_page_numbers'] = TRUE;
+                        $config['reuse_query_string'] = TRUE;
+                                
+                        $config['cur_tag_open'] = '<li><a class="current"><strong>';
+                        $config['cur_tag_close'] = '</strong></a></li>';
+                        $config['num_tag_open'] = '&nbsp;<li>';
+                        $config['num_tag_close'] = '</li>&nbsp;';
+                        $config['prev_tag_open'] = '<li>';
+                        $config['prev_tag_close'] = '</li>';
+                        $config['last_tag_open'] = '<li>';
+                        $config['last_tag_close'] = '</li>';
+                        $config['next_tag_open'] = '<li>';
+                        $config['next_tag_close'] = '</li>';
+                        $config['first_tag_open'] = '<li>';
+                        $config['first_tag_close'] = '</li>';
+                        $config['next_link'] = 'Next';
+                        $config['prev_link'] = 'Previous';
+                        $this->pagination->initialize($config);
+                        $arr["link"] = $this->pagination->create_links();
+                        $data['display']=$this->load->view($this->parent_page.'/request_list_inv',$arr,true);
+                        $this->_show('display', $data, $key);
+                  break;
+
                   case "p2":
                         $this->load->database();
                         $this->load->model('m_dept');
@@ -673,45 +726,7 @@ class Inventory extends CI_Controller {
                       }
               }
 
-              public function request()
-              {
-                    if ($this->input->post()) 
-                    {
-                      $arr = $this->input->post();
-                      $this->load->database();
-                      $this->load->model('m_request');
-                      $this->load->model('m_request_item');
-                      $this->load->library('my_func');
-
-                      $us_id = $this->my_func->scpro_decrypt($this->session->userdata('id'));
-                      $arr2 = array(
-                        're_shift' => $arr['shift'],
-                        're_plan' => $arr['plan'],
-                        're_ship' => $arr['ship'],
-                        'dp_id' => $arr['dept'],
-                        'us_id' => $us_id,
-                        'rs_id' => 1 
-                      );
-
-                      $id = $this->m_request->insert($arr2);
-
-                      $sizeArr = sizeof($arr['itemId']);
-
-                      for ($i=0; $i < $sizeArr; $i++) 
-                      { 
-                          $arr3 = array(
-                            're_id' => $id,
-                            'it_id' => $arr['itemId'][$i],
-                            'ri_qty' => $arr['qty'][$i]  
-                          );
-
-                          $this->m_request_item->insert($arr3);   
-                      }
-                      
-                        $this->session->set_flashdata('success', 'Category details are successfully inserted');
-                        redirect(site_url('Inventory/page/p2'),'refresh');    
-                    }
-              }
+              
            
                public function addCat()
               {
@@ -1198,6 +1213,58 @@ class Inventory extends CI_Controller {
 
             }
 
+              public function request_status()
+              {
+                  if ($this->input->post('reid')) 
+                  {
+                      $this->load->database();
+                      $this->load->model('m_request');
+                      $this->load->library('my_func');
+
+                      $re_id = $this->my_func->scpro_decrypt($this->input->post('reid'));
+                      $us_id = $this->my_func->scpro_decrypt($this->session->userdata('id'));
+                      $rs_id = array(
+                        'rs_id' => 2,
+                        've_id' => $us_id,
+                      );
+
+                      $result = $this->m_request->update($rs_id,$re_id);
+
+                      $this->session->set_flashdata('success', 'Request order are successfully Updated');
+                      redirect(site_url('Inventory/page/so4'),'refresh');
+                  }   
+              }
+              public function request_code()
+              {
+                  if ($this->input->get('id')) 
+                  {
+                        $this->load->database();
+                        $this->load->model('m_request');
+                        $this->load->model('m_dept');
+                        $this->load->model('m_item');
+                        $this->load->library('my_func');
+                        
+                        $itemId = $this->my_func->scpro_decrypt($this->input->get('id'));
+
+                        $data = $this->m_request->getList($itemId);
+                        $arr['arr'] = array_shift($data);
+
+                        $arr['supp'] = $this->m_dept->get();
+                        $arr['item2'] = $this->m_item->getAll();
+                        $this->load->view($this->parent_page."/A4/request_code",$arr);   
+                        
+                  }
+                        
+                
+              }
+
+              public function request_email()
+              {
+                $this->load->library('my_func');
+                
+                $this->load->view($this->parent_page."/email/request_email");  
+              }
+
               public function getAjaxCat()
               {
                  
@@ -1376,6 +1443,24 @@ class Inventory extends CI_Controller {
                 $this->load->view($this->parent_page."/ajax/getAjaxItem",$temp);  
 
               }
+              public function getAjaxRequest()
+              {
+
+                  $this->load->database();
+                  $this->load->model('m_request');
+                  $this->load->model('m_dept');
+                  $this->load->library('my_func');
+
+                  $request = $this->input->post('search');
+                  
+                  $re_id2 = str_replace("RE-","",$request);
+                  $re_id = $re_id2-10000;
+                  $temp['supp']= $this->m_dept->get();
+                  $temp['arr'] = $this->m_request->get($re_id);
+
+                  $this->load->view($this->parent_page."/ajax/getAjaxRequest",$temp);  
+                
+              }
               public function getAjaxItem2()
               {
                 $this->load->database();
@@ -1406,33 +1491,7 @@ class Inventory extends CI_Controller {
 
               }
 
-              public function getAjaxTdQty()
-              {
-                $this->load->database();
-                $this->load->model('m_item');
-                $this->load->library('my_func');
-                
-                $item = $this->input->post('item');
-
-                $temp['item'] = $this->m_item->getAll($item);
-
-                $this->load->view($this->parent_page."/ajax/getAjaxTdQty",$temp);  
-
-              }
-
-              public function getAjaxTdPrice()
-              {
-                $this->load->database();
-                $this->load->model('m_item');
-                $this->load->library('my_func');
-                
-                $item = $this->input->post('item');
-
-                $temp['item'] = $this->m_item->getAll($item);
-
-                $this->load->view($this->parent_page."/ajax/getAjaxTdPrice",$temp);  
-
-              }
+              
                public function getAjaxTable()
               {
                  

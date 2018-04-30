@@ -1,7 +1,4 @@
 
-
-<body>
-
 	<div id="wrapper">
 
 	<div id="page-wrapper">
@@ -12,15 +9,18 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                             Check-In Item
+                             Received Stock
                           
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="<?= site_url('Inventory/page/a1'); ?>">Dashboard</a>
                             </li>
+                            <li>
+                                <i class="fa fa-th-large"></i> Inventory                            
+                            </li>
                             <li class="active">
-                                <i class="fa fa-caret-square-o-down"></i> Check-In Item
+                                <i class="fa fa-caret-square-o-down"></i> Received Stock
                             </li>
                         </ol>
                     </div>
@@ -39,7 +39,7 @@
 
                                         <div class="row">
                                             <div class=" col-md-4">
-                                                <h3 class="page-header">Check-In Item Form</h3>
+                                                <h3 class="page-header">Received Stock Form</h3>
                                             </div>
                                         </div>
                                         <form role="form" method="post" action="<?= site_url('Inventory/stock_in'); ?>">

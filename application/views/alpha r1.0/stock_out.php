@@ -11,15 +11,18 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                             Check-Out Item
+                             Issued Stock
                           
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="<?= site_url('Inventory/page/a1'); ?>">Dashboard</a>
+                            </li> 
+                            <li>
+                                <i class="fa fa-th-large"></i> Inventory
                             </li>
                             <li class="active">
-                                <i class="fa fa-caret-square-o-down"></i> Check-Out Item
+                                <i class="fa fa-caret-square-o-down"></i> Issued Stock
                             </li>
                         </ol>
                     </div>
@@ -37,7 +40,7 @@
 
                                         <div class="row">
                                             <div class=" col-md-4">
-                                                <h3 class="page-header">Check-Out Item Form</h3>
+                                                <h3 class="page-header">Issued Stock Form</h3>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -45,13 +48,9 @@
                                                         <div class="col-md-8"> 
                                                                 <div class="form-group input-group">
                                                                     
-                                                                    <!-- <div class="col-md-8"> -->
-                                                                    
                                                                             <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                                                                             <input class="form-control input-lg" name="search" id="search" placeholder="Item Barcode or Request Code" autofocus>
-                                                        
-                                                                        
-                                                                    <!-- </div> -->           
+      
                                                                 </div>
                                                         </div>
                                                        
@@ -61,30 +60,34 @@
                                           
                                          <div class="row">
                                                 <div class="form-group">
-                                                    <div class="col-md-4">
-                                                            <div class="form-group">
-                                                        
-                                                        
-                                                                <input class="form-control input-lg" name="request" id="request" placeholder="Request Number">
 
-                                            
+                                                        <div id="requestList">
+                                                            <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                
+                                                                
+                                                                        <input class="form-control input-lg" name="request" id="request" placeholder="Request Number">
+
+                                                    
+                                                                    </div>
+                                                                
                                                             </div>
-                                                        
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                            <div class="form-group">
-                                                        
-                                                        
-                                                                 <select class="form-control input-lg" name="dept" id="dept" required>
-                                                                     <option value="">Send To</option>                                                                 
-                                                                     <?php foreach ($supp as $key) { ?>
-                                                                        <option value="<?= $key->dp_id; ?>" > <?= $key->dp_dept; ?> </option>
-                                                                    <?php } ?>  
-                                                                 </select> 
-                                            
+                                                            <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                
+                                                                
+                                                                        <select class="form-control input-lg" name="dept" id="dept" required>
+                                                                            <option value="">Send To</option>                                                                 
+                                                                            <?php foreach ($supp as $key) { ?>
+                                                                                <option value="<?= $key->dp_id; ?>" > <?= $key->dp_dept; ?> </option>
+                                                                            <?php } ?>  
+                                                                        </select> 
+                                                    
+                                                                    </div>
+                                                                
                                                             </div>
-                                                        
-                                                    </div>
+                                                        </div>
+                                                            
                                                      <div class="col-md-4"> 
                                                         
                                                                 <div class="form-group">
@@ -192,13 +195,27 @@ $(document).ready(function () {
 	avgTimeByChar: 100, // it's not a barcode if a character takes longer than 100ms
 	onComplete: function(barcode){
 
-     $.post('<?= site_url('Inventory/getAjaxItem2'); ?>', {search : barcode, num : num}, function(data) {
+    if (barcode.includes("RE")) 
+    {
+        $.post('<?= site_url('Inventory/getAjaxRequest'); ?>', {search : barcode}, function(data) {
+
+                $("#requestList").html(data);
+                $('#search').val("");  
+            
+
+            });
+    }
+    else
+    {
+        $.post('<?= site_url('Inventory/getAjaxItem2'); ?>', {search : barcode, num : num}, function(data) {
 
                 $("#ItemList").append(data);
                 $('#search').val("");  
 
             });
     num ++;	 	
+    }
+     
     } 
     });
 

@@ -14,14 +14,17 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo3"><i class="fa fa-fw fa-th-large"></i> Inventory</a>
                         <ul id="demo3" class="collapse">
                             <li>
-                                <a href="<?= site_url('Inventory/page/so1'); ?>"><i class="fa fa-fw fa-caret-square-o-down"></i> Goods Received</a>
+                                <a href="<?= site_url('Inventory/page/so1'); ?>"><i class="fa fa-fw fa-caret-square-o-down"></i> Received Stock</a>
                                 
                             </li>
                             <li>
-                               <a href="<?= site_url('Inventory/page/so2'); ?>"><i class="fa fa-fw fa-caret-square-o-up"></i> Goods Discharged</a>
+                               <a href="<?= site_url('Inventory/page/so2'); ?>"><i class="fa fa-fw fa-caret-square-o-up"></i> Issued Stock</a>
                             </li>
                             <li>
-                               <a href="<?= site_url('Inventory/page/so3'); ?>"><i class="fa fa-fw fa-exchange"></i> Goods Diverted</a>
+                               <a href="<?= site_url('Inventory/page/so3'); ?>"><i class="fa fa-fw fa-exchange"></i> Transfer Stock</a>
+                            </li>
+                            <li>
+                               <a href="<?= site_url('Inventory/page/so4'); ?>"><i class="fa fa-fw fa-list"></i> Request List</a>
                             </li>
                         </ul>
                     </li>

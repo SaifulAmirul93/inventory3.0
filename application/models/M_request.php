@@ -84,17 +84,20 @@ class M_request extends CI_Model {
      */
     public function delete($where = array()) {
 
-            $where = array(self::PRI_INDEX => $where);
-    
-        $this->db->delete(self::TABLE_NAME, $where);
+        $where = array(self::PRI_INDEX => $where);
+        $delete =array('del' => 1);
+            
+        $this->db->update(self::TABLE_NAME, $delete, $where);
+        
         return $this->db->affected_rows();
     }
 
-    public function count($filter = NULL, $like = null, $where = null)
+    public function count($filter = NULL, $like = null, $where = null, $delete = 0)
     {
         $this->db->from(self::TABLE_NAME);
         
-
+	    $this->db->where('del', $delete);
+	    	
         if($filter != NULL || $like != NULL)
         {
             if (is_array($filter) && $filter != NULL) 
@@ -115,7 +118,7 @@ class M_request extends CI_Model {
         }
     }
 
-    public function get_curr( $limit = 10, $start = 0, $filter = array(), $like = NULL ,$where = NULL,$st = NULL)
+    public function get_curr( $limit = 10, $start = 0, $filter = array(), $like = NULL ,$where = NULL,$st = NULL,$delete = 0)
     {
         $this->db->from('request re');
 
@@ -124,6 +127,8 @@ class M_request extends CI_Model {
         $this->db->join('request_status rs', 'rs.rs_id = re.rs_id', 'left');
         
         
+        $this->db->where('del', $delete);
+	    
         $this->db->limit($limit, $start);
 
     	if($filter != NULL){
@@ -143,6 +148,8 @@ class M_request extends CI_Model {
     		}
         }
 
+        $this->db->order_by('re.re_date', 'desc');
+
     	return $this->db->get()->result();
         
     }
@@ -156,6 +163,7 @@ class M_request extends CI_Model {
         $this->db->join('department de', 'de.dp_id = re.dp_id', 'left');
         $this->db->join('invento_users iu', 'iu.id = re.us_id', 'left');
         $this->db->join('request_status rs', 'rs.rs_id = re.rs_id', 'left');
+        $this->db->join('request_barcode rb', 'rb.re_id = re.re_id', 'left');
 
         if ($where !== NULL) 
         {
@@ -183,6 +191,10 @@ class M_request extends CI_Model {
             $this->db->from('request_item ri');
 
             $this->db->join('invento_items it', 'it.it_id = ri.it_id', 'left');
+
+            $this->db->join('barcode ba', 'ba.item_id = it.it_id', 'left');
+
+            $this->db->join('unit un', 'un.un_id = it.un_id', 'left');
             
             $this->db->join('type ty', 'ty.ty_id = it.ty_id', 'left');
 
@@ -202,7 +214,16 @@ class M_request extends CI_Model {
             
             $res3 = array_shift($res3);
 
+            $this->db->select('username');
+            $this->db->from('invento_users');
+            $this->db->where('id', $key->ve_id);
+
+            $res4 = $this->db->get()->result();
+            
+            $res4 = array_shift($res4);
+
             $data[] = array(
+                'verified' => $res4,                
                 'user' => $res3,
                 'request' => $key,
                 'item' => $res2

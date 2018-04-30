@@ -11,11 +11,14 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                             Request
+                             Request List
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="<?= site_url('Inventory/page/a1'); ?>">Dashboard</a>
+                            </li>
+                            <li>
+                                <i class="fa fa-th-large"></i> Inventory
                             </li>
                             <li class="active">
                                 <i class="fa fa-list"></i> Request List
@@ -59,9 +62,7 @@
                     <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">                    
-                            <a href="<?= site_url('Production/page/p2'); ?>">                             
-                                <button type="button" class="btn btn-success"><i class="fa fa-plus"></i> Add Request</button>
-                            </a>
+                                <h3 class="panel-title"><i class="fa fa-list fa-fw"></i> Request List</h3>                            
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -133,9 +134,21 @@
                                             <span class="label" style = "background-color : <?= $key->rs_color; ?>;font-size:15px"><strong><?= $key->rs_desc; ?></strong></span>
                                             </td>
                                             <td>
-                                            <button type="button" class="delBtn btn btn-danger btn-circle btn-xs" title="Delete"  id="<?= $n.'del' ?>" name="<?= $n.'del' ?>" <?php if ($key->rs_id==2) { echo "disabled";} ?>><i class="fa fa-close"></i></button>
-                                             <input type="hidden" class="form-control <?= $n.'del' ?>" name="item_id" id="item_id" value="<?= $this->my_func->scpro_encrypt($key->re_id); ?>">
-                                             
+                                            <center>
+                                                <?php if($key->rs_id!=2 && $key->rs_id!=3){?>
+                                                    <button type="button" class="recBtn btn btn-primary btn-xs" title="Received" name="<?= $n.'rec' ?>" id="<?= $n.'rec' ?>" ><i class="fa fa-thumbs-up"></i></button>
+                                                    <input type="hidden" class="form-control <?= $n.'rec' ?>" value="<?= $this->my_func->scpro_encrypt($key->re_id); ?>">
+                                                    
+                                                    &nbsp;-&nbsp;
+                                                <?php }?>
+                                                <?php if($key->rs_id!=1){?>
+                                                    <button type="button" class="priBtn btn btn-success btn-xs" title="Print" name="<?= $n.'pri' ?>" id="<?= $n.'pri' ?>"><i class="fa fa-print"></i></button>
+                                                    <input type="hidden" class="form-control <?= $n.'pri' ?>" value="<?= $this->my_func->scpro_encrypt($key->re_id); ?>">                                                    
+                                                    &nbsp;-&nbsp;
+                                                <?php }?>
+                                                <button type="button" class="delBtn btn btn-danger btn-circle btn-xs" title="Delete"  id="<?= $n.'del' ?>" name="<?= $n.'del' ?>" <?php if ($key->rs_id==2) { echo "disabled";} ?>><i class="fa fa-close"></i></button>
+                                                <input type="hidden" class="form-control <?= $n.'del' ?>" value="<?= $this->my_func->scpro_encrypt($key->re_id); ?>">
+                                            </center>
                                              </td>  
                                         </tr>
                                     <?php
@@ -188,17 +201,7 @@
 
      <script>
     $(document).ready(function() {
-    
-  
 
-
-
-
-
-        $('#dataTables-example').DataTable({
-            responsive: true
-        });
-    });
 
           $(".delBtn").click(function() {
 
@@ -222,17 +225,53 @@
                                 
                                 $.post('<?= site_url('Production/del_request'); ?>', {reid: reid}, function(data) {
                                     
-                                    $(window).attr("location", "<?= site_url('Production/page/p1'); ?>");
+                                    $(window).attr("location", "<?= site_url('Inventory/page/so4'); ?>");
                                     
                                 });
-
-                            }
-                            
-                            
+                            }   
                         }
                     });
-
-
                 });
+
+                $(".priBtn").click(function() {
+                    id = $(this).prop('id');
+                    reid = $("."+id).val();
+                            window.open("<?= site_url('Inventory/request_code?id='); ?>"+reid, '_blank');
+                  
+                });
+        
+
+                 $(".recBtn").click(function() {
+
+                    id = $(this).prop('id');
+                    reid = $("."+id).val();
+                    
+                    function growl(message, milliseconds){
+                        var dialog = bootbox.dialog({ 
+                            message: message,
+                            closeButton: false
+                        }); 
+
+                        setTimeout(function(){ 
+                            dialog.modal('hide'); 
+                        }, milliseconds);
+                        
+                        
+                    
+                    }
+
+                    growl("Request Status are Updated!", 2000);
+
+                    $.post('<?= site_url('Inventory/request_status'); ?>', {reid: reid}, function(data) {
+                                
+                         $(window).attr("location", "<?= site_url('Inventory/page/so4'); ?>");
+                                    
+                        });
+                   
+                });
+
+    });
+
+        
     </script>
 

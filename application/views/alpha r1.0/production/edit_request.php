@@ -32,7 +32,7 @@
                     <div class="col-lg-12">
                     <!-- /.col-lg-12 -->
                   
-                       <form role="form" method="post" action="<?= site_url('Inventory/requestEdit'); ?>">
+                       <form role="form" method="post" action="<?= site_url('Production/requestEdit'); ?>">
 
 
 
@@ -49,7 +49,7 @@
                                                     <div class="form-group">
                                                         <label class="col-md-2" >Shift :</label> 
                                                         <div class=" col-md-3">  
-                                                                <select class="form-control"  id="shift" name="shift" required>
+                                                                <select class="form-control"  id="shift" name="shift" required <?php if($arr['request']->rs_id != 1){ echo "disabled";} ?>>
                                                                     <option value="">--Select Shift--</option>
                                                                     <option value="1" <?php if($arr['request']->re_shift==1){ echo "selected";} ?>>A</option>
                                                                     <option value="2" <?php if($arr['request']->re_shift==2){ echo "selected";} ?>>B</option>
@@ -72,7 +72,7 @@
                                                     <div class="form-group">
                                                         <label class="col-md-2" >Planning :</label> 
                                                         <div class=" col-md-3">  
-                                                            <select class="form-control"  id="plan" name="plan" required>
+                                                            <select class="form-control"  id="plan" name="plan" required <?php if($arr['request']->rs_id != 1){ echo "disabled";} ?>>
                                                                     <option value="">--Select Planning--</option>
                                                                     <option value="1" <?php if($arr['request']->re_plan==1){ echo "selected";} ?>>Night</option>
                                                                     <option value="2" <?php if($arr['request']->re_plan==2){ echo "selected";} ?>>Morning</option>
@@ -94,14 +94,14 @@
                                                     <div class="form-group">
                                                             <label class="col-md-2" >Shipment :</label> 
                                                             <div class=" col-md-3">  
-                                                                <input class="form-control input-sm" type="text" id="ship" name="ship" value="<?= $arr['request']->re_ship; ?>">
+                                                                <input class="form-control input-sm" type="text" id="ship" name="ship" value="<?= $arr['request']->re_ship; ?>" <?php if($arr['request']->rs_id != 1){ echo "disabled";} ?>>
                                                                    
                                                             </div>
                                                     </div>  
                                                     <div class="form-group">
                                                             <label class="col-md-2" >S.Zone / Department :</label> 
                                                             <div class=" col-md-3">  
-                                                                    <select class="form-control" name="dept" id="dept">
+                                                                    <select class="form-control" name="dept" id="dept" <?php if($arr['request']->rs_id != 1){ echo "disabled";} ?>>
                                                                     <option value="" >Select S.Zone/Department</option>
                                                                     <?php foreach ($supp as $key) { ?>
                                                                         <option value="<?= $key->dp_id; ?>" <?php if($arr['request']->dp_id == $key->dp_id){ echo "selected"; } ?>> <?= $key->dp_dept; ?> </option>
@@ -121,7 +121,7 @@
                                                         <div class="col-lg-12">
                                                             <div class="panel panel-primary">
                                                                 <div class="panel-heading">
-                                                                    <h3 class="panel-title"><i class="fa fa-list fa-fw"></i>Product List</h3>
+                                                                    <h3 class="panel-title"><i class="fa fa-list fa-fw"></i>Item List</h3>
                                                                 </div>
                                                                 <div class="panel-body">
                                                                     <div class="row">
@@ -139,34 +139,46 @@
                                                                                             </thead>
                                                                                             <tbody id="ItemList">
                                                                                             <?php 
+                                                                                                $num=0;
+
                                                                                                 foreach($arr['item'] as $key){
+                                                                                                $num++;
                                                                                             ?>
-                                                                                              <td>
+                                                                                            <tr class="list_<?= $num; ?>">
+                                                                                                    <td>
                                                                                                         <?= $num; ?>
                                                                                                     </td>
                                                                                                     <td>
-                                                                                                            <select class="item_<?= $num; ?> form-control input-md js-example-basic-single" name="item[]" id="item" required>
+                                                                                                            <select class="item form-control input-md js-example-basic-single" name="item1[]" id="item_<?= $num; ?>" required <?php if($arr['request']->rs_id != 1){ echo "disabled";} ?>>
                                                                                                             <option value="">Select Item</option>
-                                                                                                            <?php foreach ($item as $key) {?>
-                                                                                                                <option value="<?= $key->it_id; ?>" > <?= $key->it_name; ?> | <?= $key->ct_name; ?> | <?= $key->su_name; ?></option>
+                                                                                                            <?php foreach ($item2 as $key2) {?>
+                                                                                                                <option value="<?= $key2->it_id; ?>" <?php if($key->it_id == $key2->it_id){ echo "selected"; } ?>> <?= $key2->it_name; ?> | <?= $key2->ct_name; ?> | <?= $key2->su_name; ?></option>
                                                                                                             <?php } ?>               
                                                                                                             </select> 
+                                                                                                            <input type="hidden" class="form-control" name="riId1[]" id="inputriId1[]" value="<?= $key->ri_id;  ?>">
 
                                                                                                     </td>
 
-                                                                                                        <td class="tdQty_<?= $num; ?>">
-                                                                                                            0
-                                                                                                        </td>
-                                                                                                        <td class="tdPrice_<?= $num; ?>">
+                                                                                                    <td class="tdQty_<?= $num; ?>">
+                                                                                                            <?= $key->it_qty ?>
+                                                                                                            <input type="hidden" class="form-control" name="itemId1[]" id="inputItemId1[]" value="<?= $key->it_id;  ?>">
+                                                                                                    </td>
+                                                                                                    <td class="tdPrice_<?= $num; ?>">
                                                                                                         
-                                                                                                            <div class="form-group input-group">
+                                                                                                        <div class="form-group input-group">
                                                                                                     
-                                                                                                                <input class="form-control" name="qty[]" id="qty" type="number" value="0"> 
-                                                                                                                <span class="input-group-addon">Error</span>
+                                                                                                            <input class="form-control" name="qty1[]" id="qty1" type="number" value="<?= $key->ri_qty ?>" <?php if($arr['request']->rs_id != 1){ echo "disabled";} ?>> 
+                                                                                                            <span class="input-group-addon"><?php if(!empty($key->un_desc)){echo $key->un_desc;}else{ echo "Error";} ?></span>
                                                                                                                 
-                                                                                                            </div>
+                                                                                                        </div>
                                                                                                         
-                                                                                                        </td> 
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                    <button type="button" class="delBtn btn btn-danger btn-circle btn-xs" name="<?= $num.'_del' ?>" id="<?= $num.'_del' ?>" title="Delete" <?php if($arr['request']->rs_id != 1){ echo "disabled";} ?>><i class="fa fa-close"></i></button>
+                                                                                                    <input type="hidden" class="form-control <?= $num.'_del' ?>" name="item_id" id="item_id" value="<?= $this->my_func->scpro_encrypt($key->ri_id); ?>">
+                                                                                                    </td> 
+                                                                                            </tr>
+                                                                                                    
                                                                                             <?php    
                                                                                                 }
                                                                                             ?>
@@ -174,7 +186,7 @@
                                                                                                 <tfoot>
                                                                                                     <tr>
                                                                                                         <td colspan="6" align="center">
-                                                                                                            <button type="button" class="addBtn btn btn-default btn-circle btn-md" title="Add Item" id="addBtn" name="addBtn"><i class="fa fa-fw fa-plus"></i> Add Item</button>   
+                                                                                                            <button type="button" class="addBtn btn btn-default btn-circle btn-md" title="Add Item" id="addBtn" name="addBtn" <?php if($arr['request']->rs_id != 1){ echo "disabled";} ?>><i class="fa fa-fw fa-plus"></i> Add Item</button>   
 
                                                                                                         </td>
                                                                                                     </tr>
@@ -192,27 +204,14 @@
                                                 </div>
                                             </div>
                                     
-
-
-                                         
-
-                                         
-
-
-
-                                    
-                                      
-
-
-                                        
-
-                                        
                         
                                         <div class="clear" style="height: 50px;"></div>
                                          <div class="row">
                                             <div class=" col-md-6">
-                                                <button type="submit" class="btn btn-success">Update</button>
-                                                <button type="reset" class="btn btn-danger">Reset</button>
+                                                <input type="hidden" class="form-control" name="id" id="id" value="<?= $this->my_func->scpro_encrypt($arr['request']->re_id);  ?>"></td> 
+                                                                                                
+                                                <button type="submit" class="btn btn-success" <?php if($arr['request']->rs_id != 1){ echo "disabled";} ?>>Update</button>
+                                                <button type="reset" class="btn btn-danger" <?php if($arr['request']->rs_id != 1){ echo "disabled";} ?>>Reset</button>
                                                 <a href="<?= site_url('Production/page/p1'); ?>">
                                                 <button type="button" class="btn btn-warning">Back</button>
                                             </div> 
@@ -255,7 +254,9 @@ function startTime()
             return i;
         }
 $(document).ready(function () {
-        num = 1;
+        $('.js-example-basic-single').select2();
+    
+        num = <?= $num; ?>+1;
         
         $('#addBtn').click(function() {
                 
@@ -265,5 +266,73 @@ $(document).ready(function () {
                     });
          num ++;
                 });
+
+        $('.delBtn').click(function() {
+				
+                    id = $(this).prop('id');
+                    res = id.split("_"); 
+                    ri_id = $("."+id).val();
+                    
+                    bootbox.confirm({
+                        message: "Are you sure that you want to delete this item?",
+                        buttons: {
+                            confirm: {
+                                label: 'Yes',
+                                className: 'btn-success'
+                               
+                            },
+                            cancel: {
+                                label: 'No',
+                                className: 'btn-danger'
+                            }
+                        },
+                        callback: function (result) {
+                            if(result == true)
+                            { 
+                                $.ajax({
+                                        type: 'post',
+                                        url: '<?= site_url('Production/del_item'); ?>',
+                                        dataType: 'json',
+                                        cache: false,
+                                        data: {delete:ri_id},
+                                        success : function(result) {
+                                            
+                                            bootbox.alert("Item Deleted!");
+                                            
+                                            $(".list_"+res[0]).remove();
+                                            
+                                            
+                                        },
+                                        error: function (result) {
+
+                                            bootbox.alert("Error! Please Contact IT Department About This Bugs");
+                                        }
+                                    }); 
+
+                            }
+                            
+                            
+                        }
+                    });
+		});	
+
+        $('.item').change(function() {
+
+            id = $(this).prop('id');
+            res = id.split("_"); 
+            temp = $(this).val();         
+            
+            $.post('<?= site_url('Production/getAjaxTdQty1'); ?>', {item : temp}, function(data) {
+                
+                $(".tdQty_"+res[1]).html(data);
+                
+            });
+
+             $.post('<?= site_url('Production/getAjaxTdPrice1'); ?>', {item : temp}, function(data) {
+                
+                $(".tdPrice_"+res[1]).html(data);
+                
+            });
+        });
 });
 </script>

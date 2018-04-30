@@ -49,13 +49,13 @@ $(document).ready(function() {
 
             temp = $(this).val();
             
-            $.post('<?= site_url('Inventory/getAjaxTdQty'); ?>', {item : temp}, function(data) {
+            $.post('<?= site_url('Production/getAjaxTdQty'); ?>', {item : temp}, function(data) {
                 
                 $(".tdQty_<?= $num; ?>").html(data);
                 
             });
 
-             $.post('<?= site_url('Inventory/getAjaxTdPrice'); ?>', {item : temp}, function(data) {
+             $.post('<?= site_url('Production/getAjaxTdPrice'); ?>', {item : temp}, function(data) {
                 
                 $(".tdPrice_<?= $num; ?>").html(data);
                 
